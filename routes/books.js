@@ -56,12 +56,26 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
 });
 
 // api to get info of all books
+// router.get('/', async (req, res) => {
+//   const books = await Book.find();
+//   if (!books) {
+//     res.status(500).send('books collection is empty');
+//   }
+//   res.send(books);
+// });
+
 router.get('/', async (req, res) => {
-  const books = await Book.find();
-  if (!books) {
-    res.status(500).send('books collection is empty');
-  }
-  res.send(books);
+  const data = await Book.find();
+  const filters = req.query;
+  const filteredBooks = data.filter(book => {
+    let isValid = true;
+    for (key in filters) {
+      console.log(key, book[key], filters[key]);
+      isValid = isValid && book[key] == filters[key];
+    }
+    return isValid;
+  });
+  res.send(filteredBooks);
 });
 
 // api to get reviews data of all books
