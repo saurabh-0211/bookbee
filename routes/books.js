@@ -67,10 +67,10 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
 router.get('/', async (req, res) => {
   const data = await Book.find();
   const filters = req.query;
-  const filteredBooks = data.filter(book => {
+  const filteredBooks = data.filter((book) => {
     let isValid = true;
     for (key in filters) {
-      console.log(key, book[key], filters[key]);
+      // console.log(key, book[key], filters[key]);
       isValid = isValid && book[key] == filters[key];
     }
     return isValid;

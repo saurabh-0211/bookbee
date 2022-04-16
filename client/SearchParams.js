@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Book from './Book';
 
 const SEMESTER = ['1', '2', '3', '4', '5', '6'];
@@ -10,26 +11,19 @@ const SearchParams = () => {
   const [books, setBooks] = useState([]);
   const subjects = [];
 
-  useEffect(() => {
-    requestBooks();
-  }, []);
+  const bookRequest = () => {
+    axios
+      .get(
+        `http://localhost:3000/bookbee/books?semester=${semester}&subject=${subject}&search=${search}`
+      )
+      .then((response) => {
+        console.log(response);
+        const myBooks = response.data;
+        setBooks(myBooks);
+      });
+  };
 
-  async function requestBooks() {
-    const res = await fetch(
-      `http://localhost:3000/bookbee/books?semester=${semester}&subject=${subject}&search=${search}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'no-cors'
-      }
-    );
-    const json = await res.json();
-
-    console.log(json);
-    setBooks(json.books);
-  }
+  useEffect(() => bookRequest(), []);
 
   return (
     <div className="search-params">
@@ -41,7 +35,6 @@ const SearchParams = () => {
           value={search}
           placeholder="Titles, Book.."
         />
-
         <label htmlFor="semester">Semester</label>
         <select
           id="semester"
@@ -69,8 +62,15 @@ const SearchParams = () => {
             </option>
           ))}
         </select>
-
         <button>Submit</button>
+        {books.map((book) => (
+          <Book
+            subject={book.subject}
+            search={book.search}
+            semester={book.semester}
+            key={book.id}
+          />
+        ))}
       </form>
     </div>
   );
