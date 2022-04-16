@@ -94,21 +94,21 @@ html{
 }
 
 #facebookIcon{
-  background-image:      url("https://image.flaticon.com/icons/svg/145/145802.svg");
+  /* background-image:      url("https://image.flaticon.com/icons/svg/145/145802.svg"); */
   background-repeat: no-repeat;
   width: 3rem;
   height: 3rem;
 }
 
 #twitterIcon{
-  background-image: url("https://image.flaticon.com/icons/svg/145/145812.svg");
+  /* background-image: url("https://image.flaticon.com/icons/svg/145/145812.svg"); */
   background-repeat: no-repeat;
   width: 3rem;
   height: 3rem;
 }
 
 #googleIcon{
-  background-image: url("https://image.flaticon.com/icons/svg/145/145804.svg");
+  /* background-image: url("https://image.flaticon.com/icons/svg/145/145804.svg"); */
   background-repeat: no-repeat;
   width: 3rem;
   height: 3rem;
