@@ -17,7 +17,13 @@ const SearchParams = () => {
   async function requestBooks() {
     const res = await fetch(
       `http://localhost:3000/bookbee/books?semester=${semester}&subject=${subject}&search=${search}`,
-      { mode: 'no-cors' }
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'no-cors'
+      }
     );
     const json = await res.json();
 

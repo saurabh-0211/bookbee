@@ -64,29 +64,11 @@ router.get('/', async (req, res) => {
   res.send(books);
 });
 
-// api to get info of books of a particular semester
-router.get('/semester', async (req, res) => {
-  const books = await Book.find({ semester: req.body.semester });
-  if (!books) {
-    res.status(500).send('that particular semester books collection is empty');
-  }
-  res.send(books);
-});
-
 // api to get reviews data of all books
 router.get('/reviews', async (req, res) => {
   const books = await Book.find({}).select('reviews -_id');
   if (!books) {
     res.status(500).send('books collection is empty');
-  }
-  res.send(books);
-});
-
-//api to get books data of a particular subject
-router.get('/subject', async (req, res) => {
-  const books = await Book.find({ subject: req.body.subject });
-  if (!books) {
-    res.status(500).send('that particular subjects books collection is empty');
   }
   res.send(books);
 });
@@ -106,6 +88,24 @@ router.get('/semAndSubject', async (req, res) => {
 });
 
 // -- jitni bhi get requests bina id ki hai woh iske upar daalo
+// api to get info of books of a particular semester
+router.get('/:semester', async (req, res) => {
+  const books = await Book.find({ semester: req.params.semester });
+  if (!books) {
+    res.status(500).send('that particular semester books collection is empty');
+  }
+  res.send(books);
+});
+
+//api to get books data of a particular subject
+router.get('/:subject', async (req, res) => {
+  const books = await Book.find({ subject: req.params.subject });
+  if (!books) {
+    res.status(500).send('that particular subjects books collection is empty');
+  }
+  res.send(books);
+});
+
 // api to get info of a specific book
 router.get(`/:id`, async (req, res) => {
   const book = await Book.findById(req.params.id);
