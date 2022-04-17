@@ -33,6 +33,6 @@ export default function useSubjectList(semester) {
           setStatus('loaded');
         });
     }
-  }, [semester]);
+  }, [semester]); // eslint-disable-next-line react-hooks/exhaustive-deps
   return [subjectList, status];
 }
