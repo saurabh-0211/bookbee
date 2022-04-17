@@ -77,13 +77,13 @@ class LoginForm extends Component{
 
       <div>
 
-        <div class="row">
+        <div className="row">
           <label>Email</label>
           <input name="email" onChange={this.onChange} type="email" placeholder="Enter your username" required/>
           <div className="errorMsg">{this.state.errors.emailid}</div>
         </div>
 
-        <div class="row">
+        <div className="row">
           <label>Password</label>
           <input name="password" onChange={this.onChange} type="password" placeholder="Enter your password" required/>
           <div className="errorMsg">{this.state.errors.password}</div>
@@ -91,7 +91,7 @@ class LoginForm extends Component{
 
        
         
-        <div id="button" class="row">
+        <div id="button" className="row">
           <button onClick={this.onSubmit}>Log in</button>
         </div>
       </div>
@@ -116,13 +116,13 @@ const FormHeader = props => (
 // );
 
 // const FormButton = props => (
-//   <div id="button" class="row">
+//   <div id="button" className="row">
 //     <button>{props.title}</button>
 //   </div>
 // );
 
 // const FormInput = props => (
-//   <div class="row">
+//   <div className="row">
 //     <label>{props.description}</label>
 //     <input type={props.type} placeholder={props.placeholder} required/>
 //   </div>  

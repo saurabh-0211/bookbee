@@ -62,7 +62,7 @@ const SearchParams = () => {
             </option>
           ))}
         </select>
-        <button>Submit</button>
+        <button onClick={bookRequest}>Submit</button>
         {books.map((book) => (
           <Book
             subject={book.subject}
