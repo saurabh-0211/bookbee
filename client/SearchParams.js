@@ -14,7 +14,7 @@ const SearchParams = () => {
   const bookRequest = () => {
     axios
       .get(
-        `http://localhost:3000/bookbee/books?semester=${semester}&subject=${subject}&search=${search}`
+        `http://localhost:3000/bookbee/books?semester=6`
       )
       .then((response) => {
         console.log(response);
@@ -66,7 +66,7 @@ const SearchParams = () => {
         {books.map((book) => (
           <Book
             subject={book.subject}
-            search={book.search}
+            bookName={book.bookName}
             semester={book.semester}
             key={book.id}
           />
