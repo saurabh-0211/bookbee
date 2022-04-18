@@ -67,10 +67,8 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
 router.get('/', async (req, res) => {
   const data = await Book.find();
   const filters = req.query;
-  console.log(filters['subject'])
-  if(filters['subject'] === ''){
+  if (filters['subject'] === '') {
     delete filters.subject;
-    console.log(filters);
   }
   const filteredBooks = data.filter((book) => {
     let isValid = true;
@@ -106,18 +104,17 @@ router.get('/semAndSubject', async (req, res) => {
   res.send(books);
 });
 
-// api to get subject names as per semester 
-router.get('/getSubjectNames', async(req, res) => {
-  const semester = req.query.semester
-  let books = await Book.find({semester:semester}).select('subject -_id')
-  if(!books){
+// api to get subject names as per semester
+router.get('/getSubjectNames', async (req, res) => {
+  const semester = req.query.semester;
+  let books = await Book.find({ semester: semester }).select('subject -_id');
+  if (!books) {
     res.status(500).send('some error caused');
   }
-  const key = 'subject'
-  books = [...new Map(books.map(item =>
-    [item[key],item])).values()]
+  const key = 'subject';
+  books = [...new Map(books.map((item) => [item[key], item])).values()];
   res.send(books);
-})
+});
 
 // -- jitni bhi get requests bina id ki hai woh iske upar daalo
 // api to get info of books of a particular semester
