@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Book from './Book';
+import Results from './Results';
 import useSubjectList from './useSubjectList';
 
 const SEMESTER = ['1', '2', '3', '4', '5', '6', '7', '8'];
@@ -12,18 +12,28 @@ const SearchParams = () => {
   const [books, setBooks] = useState([]);
   const [subjects] = useSubjectList(semester);
 
-  const bookRequest = () => {
-    axios.get(`http://localhost:3000/bookbee/books`).then((response) => {
-      const myBooks = response.data;
-      setBooks(myBooks);
-    });
+  const requestBooks = () => {
+    axios
+      .get(
+        `http://localhost:3000/bookbee/books?semester=${semester}&subject=${subject}`
+      )
+      .then((response) => {
+        const myBooks = response.data;
+        setBooks(myBooks);
+        console.log(myBooks);
+      });
   };
 
-  useEffect(() => bookRequest(), []);
+  useEffect(() => requestBooks(), []);
 
   return (
     <div className="search-params">
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestBooks();
+        }}
+      >
         <label htmlFor="search">Search</label>
         <input
           id="search"
@@ -58,16 +68,9 @@ const SearchParams = () => {
             </option>
           ))}
         </select>
-        <button onClick={bookRequest}>Submit</button>
-        {books.map((book) => (
-          <Book
-            // subject={book.subject}
-            bookName={book.bookName}
-            // semester={book.semester}
-            key={book._id}
-          />
-        ))}
+        <button>Submit</button>
       </form>
+      <Results books={books} />
     </div>
   );
 };
