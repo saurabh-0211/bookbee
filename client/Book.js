@@ -1,10 +1,11 @@
-const Book = ({ _id, bookName, image, authors }) => {
+import { Link } from 'react-router-dom';
+const Book = ({ id, bookName, image, authors }) => {
   let hero = 'http://pets-images.dev-apis.com/pets/none.jpg';
   if (image.length) {
     hero = image;
   }
   return (
-    <a href={`/details/${_id}`} className="book">
+    <Link to={`/details/${id}`} className="book">
       <div className="image-container">
         <img src={hero} alt={bookName} />
       </div>
@@ -12,7 +13,7 @@ const Book = ({ _id, bookName, image, authors }) => {
         <h1>{bookName}</h1>
         <h2>{authors}</h2>
       </div>
-    </a>
+    </Link>
   );
 };
 

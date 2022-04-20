@@ -9,6 +9,7 @@ const Results = ({ books }) => {
         books.map((book) => (
           <Book
             key={book._id}
+            id={book._id}
             bookName={book.bookName}
             image={book.image}
             authors={book.authors}

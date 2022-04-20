@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "parcel client/index.html",
+    "build": "parcel build client/index.html",
     "format": "prettier --write \"{client,middleware,models,routes}/**/*.{js,jsx}\"",
     "lint": "eslint \"{client,middleware,models,routes}/**/*.{js,jsx}\" --quiet"
   },
@@ -24,7 +25,8 @@
     "multer": "^1.4.4",
     "nodemon": "^2.0.15",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",

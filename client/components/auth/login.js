@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import './login.css';
 
-class LoginForm extends Component {
+class Login extends Component {
   state = {
     email: '',
     password: '',
@@ -143,4 +143,4 @@ const Twitter = (props) => <a href="#" id="twitterIcon"></a>;
 
 const Google = (props) => <a href="#" id="googleIcon"></a>;
 
-export default LoginForm;
+export default Login;
