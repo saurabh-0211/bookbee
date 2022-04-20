@@ -129,3 +129,8 @@ html{
    padding-top: 2rem;
    margin-top: 1.5rem;
 }
+
+.errorMsg {
+  color: #cc0000;
+  margin-bottom: 12px;
+}
