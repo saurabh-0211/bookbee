@@ -121,6 +121,20 @@ router.get('/getSubjectNames', async (req, res) => {
   res.send(books);
 });
 
+// Api for full Text search on the terms in field {bookname, subject, authors, publisher}
+router.get('/search', async (req, res) => {
+  const searchText = req.query.searchText || "";
+  const pageNumber = req.query.page ||  1;
+  const nPerPage = 5; // number of records per page
+  let books = await Book.find({$text: {$search: searchText}})
+                        .skip((pageNumber-1)*nPerPage).limit(nPerPage);
+  if (!books) {
+    res.status(500).send('some error caused');
+  }
+  
+  res.send(books);
+});
+
 // -- jitni bhi get requests bina id ki hai woh iske upar daalo
 // api to get info of books of a particular semester
 router.get('/:semester', async (req, res) => {
