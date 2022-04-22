@@ -15,7 +15,7 @@ const SearchParams = () => {
   const requestBooks = () => {
     axios
       .get(
-        `http://localhost:3000/bookbee/books?semester=${semester}&subject=${subject}`
+        `http://localhost:3000/bookbee/books/?semester=${semester}&subject=${subject}`
       )
       .then((response) => {
         const myBooks = response.data;

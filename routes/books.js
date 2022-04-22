@@ -68,8 +68,12 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
 router.get('/', async (req, res) => {
 
   //const data = await Book.find();
-  if(!isNumeric(req.query.semester)){
-    return res.status(400).send("Bad request very very bad request")
+  //checks whether semester is defined i.e semester was there or not in query. if defined then checks if its numeric data or not
+  
+  if(!(req.query.semester === '') ){
+    if(!isNumeric(req.query.semester)){
+      return res.status(400).send("Bad request very very bad request")
+    }
   }
 
   const filters = {semester: req.query.semester, subject: req.query.subject} ;
@@ -80,7 +84,9 @@ router.get('/', async (req, res) => {
   if (filters['subject'] === '' || filters['subject'] === undefined) {
     delete filters.subject;
   }
-  console.log(filters);
+
+  //console.log(filters);
+  
   const pageNumber = req.query.page ||  1;
   const nPerPage = 5; // number of records per page
 
@@ -142,7 +148,7 @@ router.get('/getSubjectNames', async (req, res) => {
   for(var each in books){
     arr.push(books[each].subject);
   }
-  
+
   return res.send(arr);
 });
 
