@@ -64,35 +64,52 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
 //   res.send(books);
 // });
 
+//Api to get book of semester and subject
 router.get('/', async (req, res) => {
-  const data = await Book.find();
-  const filters = req.query;
-  //return all book if empty params
-  if (filters['subject'] === '') {
-    delete filters.subject;
-  }
-  if (filters['semester'] === '') {
-    delete filters.semester;
+
+  //const data = await Book.find();
+  if(!isNumeric(req.query.semester)){
+    return res.status(400).send("Bad request very very bad request")
   }
 
-  const filteredBooks = data.filter((book) => {
-    let isValid = true;
-    for (key in filters) {
-      // console.log(key, book[key], filters[key]);
-      isValid = isValid && book[key] == filters[key];
-    }
-    return isValid;
-  });
-  res.send(filteredBooks);
+  const filters = {semester: req.query.semester, subject: req.query.subject} ;
+
+  if (filters['semester'] === '' || filters['semester'] === undefined) {
+    delete filters.semester;
+  }
+  if (filters['subject'] === '' || filters['subject'] === undefined) {
+    delete filters.subject;
+  }
+  console.log(filters);
+  const pageNumber = req.query.page ||  1;
+  const nPerPage = 5; // number of records per page
+
+  filteredBooks = await Book.find(filters)
+                            .skip((pageNumber-1)*nPerPage).limit(nPerPage);
+
+  // const filteredBooks = data.filter((book) => {
+  //   let isValid = true;
+  //   for (key in filters) {
+  //     // console.log(key, book[key], filters[key]);
+  //     isValid = isValid && book[key] == filters[key];
+  //   }
+  //   return isValid;
+  // });
+
+  if(!filteredBooks){
+    return res.status(500).send('some error caused');
+  }
+
+  return res.send(filteredBooks);
 });
 
 // api to get reviews data of all books
 router.get('/reviews', async (req, res) => {
   const books = await Book.find({}).select('reviews -_id');
   if (!books) {
-    res.status(500).send('books collection is empty');
+    return res.status(500).send('books collection is empty');
   }
-  res.send(books);
+  return res.send(books);
 });
 
 // api to sort the books according to their ratings and display them
@@ -104,21 +121,24 @@ router.get('/semAndSubject', async (req, res) => {
     .select('bookName authors publisher reviews rating image -_id')
     .sort({ rating: 'desc' });
   if (!books) {
-    res.status(500).send('Data is not present for this input');
+    return res.status(500).send('Data is not present for this input');
   }
-  res.send(books);
+  return res.send(books);
 });
 
 // api to get subject names as per semester
 router.get('/getSubjectNames', async (req, res) => {
   const semester = req.query.semester;
+  if(!isNumeric(semester)){
+    return res.status(400).send("Bad request very very bad request")
+  }
   let books = await Book.find({ semester: semester }).select('subject -_id');
   if (!books) {
-    res.status(500).send('some error caused');
+    return res.status(500).send('some error caused');
   }
   const key = 'subject';
   books = [...new Map(books.map((item) => [item[key], item])).values()];
-  res.send(books);
+  return res.send(books);
 });
 
 // Api for full Text search on the terms in field {bookname, subject, authors, publisher}
@@ -129,38 +149,52 @@ router.get('/search', async (req, res) => {
   let books = await Book.find({$text: {$search: searchText}})
                         .skip((pageNumber-1)*nPerPage).limit(nPerPage);
   if (!books) {
-    res.status(500).send('some error caused');
+    return res.status(500).send('some error caused');
   }
   
-  res.send(books);
+  return res.send(books);
 });
+
+//Auxillary function
+//check if semNumber is a numeric data and returns true if it is
+function isNumeric(str) {
+  if (typeof str != "string") return false; 
+  return !isNaN(str) && 
+         !isNaN(parseFloat(str))
+}
 
 // -- jitni bhi get requests bina id ki hai woh iske upar daalo
 // api to get info of books of a particular semester
-router.get('/:semester', async (req, res) => {
-  const books = await Book.find({ semester: req.params.semester });
-  if (!books) {
-    res.status(500).send('that particular semester books collection is empty');
+router.get('/sem/:semester', async (req, res) => {
+ 
+  const semNumber = req.params.semester;
+
+  if(!isNumeric(semNumber)){
+    return res.status(400).send("Bad request very very bad request")
   }
-  res.send(books);
+  const books = await Book.find({ semester: semNumber});
+  if (!books) {
+    return res.status(500).send('that particular semester books collection is empty');
+  }
+  return res.send(books);
 });
 
 //api to get books data of a particular subject
-router.get('/:subject', async (req, res) => {
-  const books = await Book.find({ subject: req.params.subject });
-  if (!books) {
-    res.status(500).send('that particular subjects books collection is empty');
-  }
-  res.send(books);
-});
+// router.get('/:subject', async (req, res) => {
+//   const books = await Book.find({ subject: req.params.subject });
+//   if (!books) {
+//     return res.status(500).send('that particular subjects books collection is empty');
+//   }
+//   return res.send(books);
+// });
 
 // api to get info of a specific book
 router.get(`/:id`, async (req, res) => {
   const book = await Book.findById(req.params.id);
   if (!book) {
-    res.status(500).send('this book is not present in our database');
+    return res.status(500).send('this book is not present in our database');
   }
-  res.send(book);
+  return res.send(book);
 });
 
 // api to delete a specific book's data
