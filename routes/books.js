@@ -138,7 +138,12 @@ router.get('/getSubjectNames', async (req, res) => {
   }
   const key = 'subject';
   books = [...new Map(books.map((item) => [item[key], item])).values()];
-  return res.send(books);
+  var arr = [];
+  for(var each in books){
+    arr.push(books[each].subject);
+  }
+  
+  return res.send(arr);
 });
 
 // Api for full Text search on the terms in field {bookname, subject, authors, publisher}
