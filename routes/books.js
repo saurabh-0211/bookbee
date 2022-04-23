@@ -66,17 +66,16 @@ router.post('/', uploadOptions.single('image'), async (req, res) => {
 
 //Api to get book of semester and subject
 router.get('/', async (req, res) => {
-
   //const data = await Book.find();
   //checks whether semester is defined i.e semester was there or not in query. if defined then checks if its numeric data or not
-  
-  if(!(req.query.semester === '') ){
-    if(!isNumeric(req.query.semester)){
-      return res.status(400).send("Bad request very very bad request")
+
+  if (!(req.query.semester === '')) {
+    if (!isNumeric(req.query.semester)) {
+      return res.status(400).send('Bad request very very bad request');
     }
   }
 
-  const filters = {semester: req.query.semester, subject: req.query.subject} ;
+  const filters = { semester: req.query.semester, subject: req.query.subject };
 
   if (filters['semester'] === '' || filters['semester'] === undefined) {
     delete filters.semester;
@@ -86,12 +85,13 @@ router.get('/', async (req, res) => {
   }
 
   //console.log(filters);
-  
-  const pageNumber = req.query.page ||  1;
+
+  const pageNumber = req.query.page || 1;
   const nPerPage = 5; // number of records per page
 
   filteredBooks = await Book.find(filters)
-                            .skip((pageNumber-1)*nPerPage).limit(nPerPage);
+    .skip((pageNumber - 1) * nPerPage)
+    .limit(nPerPage);
 
   // const filteredBooks = data.filter((book) => {
   //   let isValid = true;
@@ -102,7 +102,7 @@ router.get('/', async (req, res) => {
   //   return isValid;
   // });
 
-  if(!filteredBooks){
+  if (!filteredBooks) {
     return res.status(500).send('some error caused');
   }
 
@@ -135,8 +135,8 @@ router.get('/semAndSubject', async (req, res) => {
 // api to get subject names as per semester
 router.get('/getSubjectNames', async (req, res) => {
   const semester = req.query.semester;
-  if(!isNumeric(semester)){
-    return res.status(400).send("Bad request very very bad request")
+  if (!isNumeric(semester)) {
+    return res.status(400).send('Bad request very very bad request');
   }
   let books = await Book.find({ semester: semester }).select('subject -_id');
   if (!books) {
@@ -145,7 +145,7 @@ router.get('/getSubjectNames', async (req, res) => {
   const key = 'subject';
   books = [...new Map(books.map((item) => [item[key], item])).values()];
   var arr = [];
-  for(var each in books){
+  for (var each in books) {
     arr.push(books[each].subject);
   }
 
@@ -154,38 +154,39 @@ router.get('/getSubjectNames', async (req, res) => {
 
 // Api for full Text search on the terms in field {bookname, subject, authors, publisher}
 router.get('/search', async (req, res) => {
-  const searchText = req.query.searchText || "";
-  const pageNumber = req.query.page ||  1;
+  const searchText = req.query.searchText || '';
+  const pageNumber = req.query.page || 1;
   const nPerPage = 5; // number of records per page
-  let books = await Book.find({$text: {$search: searchText}})
-                        .skip((pageNumber-1)*nPerPage).limit(nPerPage);
+  let books = await Book.find({ $text: { $search: searchText } })
+    .skip((pageNumber - 1) * nPerPage)
+    .limit(nPerPage);
   if (!books) {
     return res.status(500).send('some error caused');
   }
-  
+
   return res.send(books);
 });
 
 //Auxillary function
 //check if semNumber is a numeric data and returns true if it is
 function isNumeric(str) {
-  if (typeof str != "string") return false; 
-  return !isNaN(str) && 
-         !isNaN(parseFloat(str))
+  if (typeof str != 'string') return false;
+  return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
 // -- jitni bhi get requests bina id ki hai woh iske upar daalo
 // api to get info of books of a particular semester
 router.get('/sem/:semester', async (req, res) => {
- 
   const semNumber = req.params.semester;
 
-  if(!isNumeric(semNumber)){
-    return res.status(400).send("Bad request very very bad request")
+  if (!isNumeric(semNumber)) {
+    return res.status(400).send('Bad request very very bad request');
   }
-  const books = await Book.find({ semester: semNumber});
+  const books = await Book.find({ semester: semNumber });
   if (!books) {
-    return res.status(500).send('that particular semester books collection is empty');
+    return res
+      .status(500)
+      .send('that particular semester books collection is empty');
   }
   return res.send(books);
 });
