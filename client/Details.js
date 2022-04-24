@@ -6,9 +6,10 @@ class Details extends Component {
 
   async componentDidMount() {
     const res = await fetch(
-      `http://localhost:3000/bookbee/books?id=${this.props.match.params.id}`
+      `http://localhost:3000/bookbee/books/${this.props.match.params.id}`
     );
     const json = await res.json();
+    console.log(json);
     this.setState(
       Object.assign(
         {
