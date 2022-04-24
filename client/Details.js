@@ -15,7 +15,7 @@ class Details extends Component {
         {
           loading: false
         },
-        json[0]
+        json
       )
     );
   }
@@ -23,7 +23,6 @@ class Details extends Component {
     if (this.state.loading) {
       return <h2>loading....</h2>;
     }
-
     const { stream, subject, bookName, publisher, authors, image, rating } =
       this.state;
     return (
