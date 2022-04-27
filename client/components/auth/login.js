@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-// import './login.css';
+import { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import './register.css';
 
 class Login extends Component {
   state = {
@@ -64,83 +65,54 @@ class Login extends Component {
 
   render() {
     return (
-      <div id="loginform">
-        <FormHeader title="Login" />
+      <form action="/login" method="POST" id="multistepsform">
+        {/* <p style="margin-top: 150px;"></p> */}
+        <fieldset>
+          <h2 className="fs-title">Login to your Account</h2>
+          <h3 className="fs-subtitle"></h3>
+          <input
+            type="text"
+            name="email"
+            onChange={this.onChange}
+            placeholder="Email"
+            required
+          />
+          <div className="errorMsg">{this.state.errors.emailid}</div>
 
-        <div>
-          <div className="row">
-            <label>Email</label>
+          <span id="password-span">
             <input
-              name="email"
-              onChange={this.onChange}
-              type="email"
-              placeholder="Enter your username"
-              required
-            />
-            <div className="errorMsg">{this.state.errors.emailid}</div>
-          </div>
-
-          <div className="row">
-            <label>Password</label>
-            <input
-              name="password"
-              onChange={this.onChange}
               type="password"
-              placeholder="Enter your password"
+              onChange={this.onChange}
+              id="password"
+              name="password"
+              placeholder="Password"
               required
             />
-            <div className="errorMsg">{this.state.errors.password}</div>
-          </div>
+            <i
+              id="hide-password"
+              className="far fa-eye-slash toggle-password"
+            ></i>
+            <i id="show-password" className="far fa-eye toggle-password"></i>
+          </span>
+          <div className="errorMsg">{this.state.errors.password}</div>
 
-          <div id="button" className="row">
-            <button onClick={this.onSubmit}>Log in</button>
-          </div>
-        </div>
-
-        <OtherMethods />
-      </div>
+          <input
+            type="submit"
+            name="submit"
+            onClick={this.onSubmit}
+            className="submit action-button"
+            value="Login"
+          />
+          <p className="forgot-password">
+            <a href="./forget-pass">Forgot Password</a>
+          </p>
+        </fieldset>
+        <p className="member-login">
+          Not yet a member? <a href="register">Sign up</a>
+        </p>
+      </form>
     );
   }
 }
-
-const FormHeader = (props) => <h2 id="headerTitle">{props.title}</h2>;
-
-// const Form = props => (
-//    <div>
-//      <FormInput description="Username" placeholder="Enter your username" type="text" />
-//      <FormInput description="Password" placeholder="Enter your password" type="password"/>
-//      <FormButton title="Log in"/>
-//    </div>
-// );
-
-// const FormButton = props => (
-//   <div id="button" className="row">
-//     <button>{props.title}</button>
-//   </div>
-// );
-
-// const FormInput = props => (
-//   <div className="row">
-//     <label>{props.description}</label>
-//     <input type={props.type} placeholder={props.placeholder} required/>
-//   </div>
-// );
-
-const OtherMethods = (props) => (
-  <div id="alternativeLogin">
-    <label>Or sign in with:</label>
-    <div id="iconGroup">
-      <Facebook />
-      <Twitter />
-      <Google />
-    </div>
-  </div>
-);
-
-const Facebook = (props) => <a href="#" id="facebookIcon"></a>;
-
-const Twitter = (props) => <a href="#" id="twitterIcon"></a>;
-
-const Google = (props) => <a href="#" id="googleIcon"></a>;
 
 export default Login;

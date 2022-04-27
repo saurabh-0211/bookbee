@@ -4,9 +4,10 @@
 }
 
 body {
-  background-color: #e4e5e4;
+  background-color: #f7d8c3;
   /* background-image: url(../public/background.png); */
   margin: 0;
+  counter-reset: step;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
