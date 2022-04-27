@@ -1,6 +1,10 @@
+import ReactStars from 'react-rating-stars-component';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+const ratingChanged = (newRating) => {
+  console.log(newRating);
+};
 class Details extends Component {
   state = { loading: true };
 
@@ -19,6 +23,7 @@ class Details extends Component {
       )
     );
   }
+
   render() {
     if (this.state.loading) {
       return <h2>loading....</h2>;
@@ -33,7 +38,16 @@ class Details extends Component {
         <div>
           <h1>{`${subject} -${bookName}`}</h1>
           <h2>{`${stream} - ${authors} - ${publisher}`}</h2>
-          <button>{rating}</button>
+          <ReactStars
+            count={5}
+            onChange={ratingChanged}
+            size={30}
+            isHalf={true}
+            emptyIcon={<i className="far fa-star"></i>}
+            halfIcon={<i className="fa fa-star-half-alt"></i>}
+            fullIcon={<i className="fa fa-star"></i>}
+            activeColor="#ffd700"
+          />
         </div>
       </div>
     );

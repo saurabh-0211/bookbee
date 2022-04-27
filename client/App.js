@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 import SearchParams from './SearchParams';
 import Details from './Details';
 
@@ -11,7 +12,7 @@ const App = () => {
       <Router>
         <header>
           <Link to="/">
-            <h1>Adopt Me</h1>
+            <h1>BookBee</h1>
           </Link>
         </header>
         <Switch>
@@ -20,6 +21,9 @@ const App = () => {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <Route path="/">
             <SearchParams />

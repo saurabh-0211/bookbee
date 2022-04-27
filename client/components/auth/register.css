@@ -1,17 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  height: 100vh;
-  background: linear-gradient(-160deg, #f7d8c3, #e2b4a5);
-  /* background-size: 400% 400%;
-	animation: gradient 10s ease infinite; */
-}
-
 body {
   font-family: 'Montserrat', sans-serif;
   counter-reset: step;
@@ -211,3 +199,8 @@ li.active:after {
 		background-position: 75% 25%;
 	}
 } */
+
+.errorMsg {
+  color: #cc0000;
+  margin-bottom: 12px;
+}
