@@ -63,7 +63,11 @@ const booksSchema = mongoose.Schema({
   image: {
     type: String,
     default: ''
-  }
+  },
+  tags: [{
+    type: String
+  }]
+
 });
 
 exports.Book = mongoose.model('Book', booksSchema);

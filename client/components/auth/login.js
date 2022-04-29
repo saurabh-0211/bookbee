@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 import './register.css';
 
+let isAuthenticated = false;
 class Login extends Component {
   state = {
     email: '',
@@ -9,6 +11,29 @@ class Login extends Component {
     msg: null,
     errors: {}
   };
+  login = ( {email, password} ) => {
+
+    //Headers
+    const config = {
+        headers: {
+            'content-type': 'application/json'
+        }
+    }
+
+    //request body
+    const body = JSON.stringify({ email, password});
+
+    axios.post('http://localhost:3000/bookbee/users/login', body, config)
+        .then(res =>{ 
+          localStorage.setItem('token', res.data.token);
+          isAuthenticated = true
+          {isAuthenticated?<div className="errorMsg">right right</div>:<div className="errorMsg">wrong wrong</div>}
+        }
+        )
+        .catch(err => {
+          console.log(err.response.data)
+        })
+}
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -26,7 +51,7 @@ class Login extends Component {
       };
 
       // Attempt to register
-      this.props.login(user);
+      this.login(user);
     }
   };
 
@@ -95,6 +120,8 @@ class Login extends Component {
             <i id="show-password" className="far fa-eye toggle-password"></i>
           </span>
           <div className="errorMsg">{this.state.errors.password}</div>
+
+          
 
           <input
             type="submit"
