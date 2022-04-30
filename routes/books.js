@@ -233,6 +233,8 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
   const { rating, comment } = req.body;
 
   const book = await Book.findById(req.params.id);
+  
+
 
   if (book) {
     const alreadyReviewed = book.reviews.find(
@@ -263,6 +265,32 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
     book.rating =
       book.reviews.reduce((acc, item) => item.rating + acc, 0) /
       book.reviews.length;
+
+    //update numratings 
+
+    switch(rating){
+      case 1:
+      case '1':
+        book.numRatings.one++;
+        break;
+      case 2:
+      case '2':
+        book.numRatings.two++;
+        break;
+      case 3:
+      case '3':
+        book.numRatings.three++;
+        break;
+      case 4:
+      case '4':
+        book.numRatings.four++;
+        break;
+      case 5:
+      case '5':
+        book.numRatings.five++;
+        break;
+    }
+
 
     await book.save();
     res.status(201).json({ message: 'Review added' });

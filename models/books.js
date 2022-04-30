@@ -66,7 +66,18 @@ const booksSchema = mongoose.Schema({
   },
   tags: [{
     type: String
-  }]
+  }],
+  r_score: {
+    type: Number,
+    default: 0
+  },
+  numRatings: {
+    one:  {type: Number},
+    two:  {type: Number},
+    three:{type: Number},
+    four: {type: Number},
+    five: {type: Number}
+  }
 
 });
 
