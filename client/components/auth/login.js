@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import './register.css';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 let isAuthenticated = false;
 class Login extends Component {
@@ -11,6 +13,8 @@ class Login extends Component {
     msg: null,
     errors: {}
   };
+
+
   login = ( {email, password} ) => {
 
     //Headers
@@ -26,12 +30,12 @@ class Login extends Component {
     axios.post('http://localhost:3000/bookbee/users/login', body, config)
         .then(res =>{ 
           localStorage.setItem('token', res.data.token);
-          isAuthenticated = true
-          {isAuthenticated?<div className="errorMsg">right right</div>:<div className="errorMsg">wrong wrong</div>}
+          console.log(res.data);
+          isAuthenticated = true;
         }
         )
         .catch(err => {
-          console.log(err.response.data)
+          this.setState({msg: err.response.data})
         })
 }
 
@@ -121,15 +125,22 @@ class Login extends Component {
           </span>
           <div className="errorMsg">{this.state.errors.password}</div>
 
-          
-
           <input
             type="submit"
             name="submit"
             onClick={this.onSubmit}
             className="submit action-button"
             value="Login"
-          />
+            />
+
+          {/*error alert */}
+          {this.state.msg?
+          <Stack sx={{ width: '100%' }} spacing={2}>
+           <Alert variant="filled" severity="error">
+             {this.state.msg}
+           </Alert>
+         </Stack>: null}
+
           <p className="forgot-password">
             <a href="./forget-pass">Forgot Password</a>
           </p>
