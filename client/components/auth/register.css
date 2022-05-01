@@ -204,3 +204,7 @@ li.active:after {
   color: #cc0000;
   margin-bottom: 12px;
 }
+
+.alertMsg {
+  display: none;
+}

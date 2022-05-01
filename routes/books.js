@@ -2,6 +2,7 @@ const { Book } = require('../models/books');
 const express = require('express');
 const router = express.Router();
 const checkAuth = require('../middleware/checkAuth');
+const checkAdmin = require('../middleware/checkAdmin');
 const multer = require('multer');
 // mime type to check uploaded image extension
 const FILE_TYPE_MAP = {
@@ -30,7 +31,7 @@ const storage = multer.diskStorage({
 const uploadOptions = multer({ storage: storage });
 
 // api to post books general data
-router.post('/', uploadOptions.single('image'), async (req, res) => {
+router.post('/',checkAuth,checkAdmin, uploadOptions.single('image'), async (req, res) => {
   const file = req.file;
   if (!file) {
     return res.status(400).send('No image in the request');
@@ -210,7 +211,7 @@ router.get(`/:id`, async (req, res) => {
 });
 
 // api to delete a specific book's data
-router.delete(`/:id`, async (req, res) => {
+router.delete(`/:id`,checkAuth,checkAdmin, async (req, res) => {
   Book.findByIdAndRemove(req.params.id)
     .then((book) => {
       if (book) {
@@ -262,7 +263,7 @@ function starsort(ratings) {
 
 
 // api to review books and find avg rating
-router.post(`/:id/reviews`, checkAuth, async (req, res) => {
+router.post(`/:id/reviews`, checkAuth,checkAdmin, async (req, res) => {
   const { rating, comment } = req.body;
 
   const book = await Book.findById(req.params.id);

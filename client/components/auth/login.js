@@ -1,3 +1,4 @@
+import 'font-awesome/css/font-awesome.min.css';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
@@ -14,30 +15,28 @@ class Login extends Component {
     errors: {}
   };
 
-
-  login = ( {email, password} ) => {
-
+  login = ({ email, password }) => {
     //Headers
     const config = {
-        headers: {
-            'content-type': 'application/json'
-        }
-    }
+      headers: {
+        'content-type': 'application/json'
+      }
+    };
 
     //request body
-    const body = JSON.stringify({ email, password});
+    const body = JSON.stringify({ email, password });
 
-    axios.post('http://localhost:3000/bookbee/users/login', body, config)
-        .then(res =>{ 
-          localStorage.setItem('token', res.data.token);
-          console.log(res.data);
-          isAuthenticated = true;
-        }
-        )
-        .catch(err => {
-          this.setState({msg: err.response.data})
-        })
-}
+    axios
+      .post('http://localhost:3000/bookbee/users/login', body, config)
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        console.log(res.data);
+        isAuthenticated = true;
+      })
+      .catch((err) => {
+        this.setState({ msg: err.response.data });
+      });
+  };
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -119,7 +118,7 @@ class Login extends Component {
             />
             <i
               id="hide-password"
-              className="far fa-eye-slash toggle-password"
+              className="fa fa-eye-slash toggle-password"
             ></i>
             <i id="show-password" className="far fa-eye toggle-password"></i>
           </span>
@@ -131,16 +130,16 @@ class Login extends Component {
             onClick={this.onSubmit}
             className="submit action-button"
             value="Login"
-            />
+          />
 
           {/*error alert */}
-          {this.state.msg?
+          {this.state.msg ? (
             <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert variant="filled" severity="error">
-              {this.state.msg}
-            </Alert>
-            </Stack>: null
-          }
+              <Alert variant="filled" severity="error">
+                {this.state.msg}
+              </Alert>
+            </Stack>
+          ) : null}
 
           <p className="forgot-password">
             <a href="./forget-pass">Forgot Password</a>

@@ -3,6 +3,8 @@ const app = express()
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const notFound = require('./middleware/errorHandler')
+const errorHandler = require('./middleware/errorHandler')
 
 require('dotenv/config')
 const api = process.env.API_URL
@@ -22,6 +24,8 @@ app.use(morgan('tiny'));
 // });
 app.use(`${api}/users`,usersRoute)
 app.use(`${api}/books`,booksRoute)
+app.use(notFound)
+app.use(errorHandler)
 app.use(`/public/uploads`,express.static(__dirname + '/public/uploads'))
 
 
