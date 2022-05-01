@@ -1,10 +1,10 @@
+import 'font-awesome/css/font-awesome.min.css';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import './register.css';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import 'font-awesome/css/font-awesome.min.css';
 
 let isAuthenticated = false;
 class Login extends Component {
@@ -120,7 +120,7 @@ class Login extends Component {
               id="hide-password"
               className="fa fa-eye-slash toggle-password"
             ></i>
-            <i id="show-password" className="fa fa-eye toggle-password"></i>
+            <i id="show-password" className="far fa-eye toggle-password"></i>
           </span>
           <div className="errorMsg">{this.state.errors.password}</div>
 
