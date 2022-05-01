@@ -7,6 +7,12 @@ require('dotenv/config');
 
 // posting new users
 router.post('/', async (req, res) => {
+
+  const checkUser = await User.findOne({ email: req.body.email });
+  if (checkUser) {
+    return res.status(400).send('this email already exists');
+  }
+
   let user = new User({
     name: req.body.name,
     username: req.body.username,

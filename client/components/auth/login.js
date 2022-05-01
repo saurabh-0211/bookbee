@@ -135,11 +135,12 @@ class Login extends Component {
 
           {/*error alert */}
           {this.state.msg?
-          <Stack sx={{ width: '100%' }} spacing={2}>
-           <Alert variant="filled" severity="error">
-             {this.state.msg}
-           </Alert>
-         </Stack>: null}
+            <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              {this.state.msg}
+            </Alert>
+            </Stack>: null
+          }
 
           <p className="forgot-password">
             <a href="./forget-pass">Forgot Password</a>
