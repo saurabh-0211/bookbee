@@ -11,11 +11,12 @@ const SearchParams = () => {
   const [subject, setSubject] = useState('');
   const [books, setBooks] = useState([]);
   const [subjects] = useSubjectList(semester);
+  const [page, setPage] = useState(1);
 
   const requestBooks = () => {
     axios
       .get(
-        `http://localhost:3000/bookbee/books/?semester=${semester}&subject=${subject}`
+        `http://localhost:3000/bookbee/books/?semester=${semester}&subject=${subject}&page=${page}`
       )
       .then((response) => {
         const myBooks = response.data;
@@ -24,7 +25,11 @@ const SearchParams = () => {
       });
   };
 
-  useEffect(() => requestBooks(), []);
+  useEffect(() => requestBooks(), [page]);
+
+  const pageIncr = () => {setPage(page+1)};
+  const pageDecr = () =>{(page === 1)?setPage(1):setPage(page-1)}
+  const pageReset = () => {setPage(1)};
 
   return (
     <div className="search-params">
@@ -68,9 +73,11 @@ const SearchParams = () => {
             </option>
           ))}
         </select>
-        <button>Submit</button>
+        <button onClick={pageReset}>Submit</button>
       </form>
       <Results books={books} />
+      <button onClick={pageDecr}>prev</button>
+      <button onClick={pageIncr}>next</button>
     </div>
   );
 };
