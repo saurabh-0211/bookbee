@@ -228,14 +228,45 @@ router.delete(`/:id`, async (req, res) => {
     });
 });
 
+//using Bayesian approach to give scores to book based on 5 star rating 
+// this function is used in reviews router 
+
+// based on unutbu's stackoverflow answer
+// https://stackoverflow.com/a/40958702/54829
+
+// which is based on Evan Miller's blog post
+// http://www.evanmiller.org/ranking-items-with-star-ratings.html
+
+function starsort(ratings) {
+  function sum(array) { return array.reduce((x, y) => x + y, 0) };
+  function square(x) { return x * x; };
+
+  const confidenceZ = 1.65;
+
+  // include five fake reviews
+  // 1 1-star, 1 2-star, 1 3-star, 1 4-star, 1 5-star
+  const fakeRatings = ratings.map(count => count + 1);
+  const N = sum(fakeRatings);
+
+  const average = sum(fakeRatings.map((count, i) => (i + 1) * count)) / N;
+  
+  // Dirichlet standard deviation of average
+  const x = sum(fakeRatings.map((count, i) => square(i + 1) * count)) / N;
+  const standardDeviation = Math.sqrt((x - square(average)) / (N + 1));
+  
+  return average - confidenceZ * standardDeviation;
+}
+//Thanks to Dan Fabulich for above code //Thanks to Evan Miller https://www.evanmiller.org/ranking-items-with-star-ratings.html
+//the above code is copied from https://gist.github.com/dfabulich/fc6b13a8bffc5518c4731347de642749
+
+
+
 // api to review books and find avg rating
 router.post(`/:id/reviews`, checkAuth, async (req, res) => {
   const { rating, comment } = req.body;
 
   const book = await Book.findById(req.params.id);
-  
-
-
+ 
   if (book) {
     const alreadyReviewed = book.reviews.find(
       (r) => r.user.toString() === req.user._id.toString()
@@ -266,8 +297,8 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
       book.reviews.reduce((acc, item) => item.rating + acc, 0) /
       book.reviews.length;
 
+    
     //update numratings 
-
     switch(rating){
       case 1:
       case '1':
@@ -291,6 +322,10 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
         break;
     }
 
+    //assigning a score
+    const starArray = Object.values(book.numRatings).map(item => item);
+    book.r_score=starsort(starArray);
+  
 
     await book.save();
     res.status(201).json({ message: 'Review added' });
