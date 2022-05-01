@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './register.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 class Register extends Component {
   render() {
@@ -25,9 +26,9 @@ class Register extends Component {
             />
             <i
               id="hide-password"
-              className="far fa-eye-slash toggle-password"
+              className="fa fa-eye-slash toggle-password"
             ></i>
-            <i id="show-password" className="far fa-eye toggle-password"></i>
+            <i id="show-password" className="fa fa-eye toggle-password"></i>
           </span>
           <input
             type="password"
