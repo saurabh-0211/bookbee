@@ -13,6 +13,8 @@ const Results = ({ books }) => {
             bookName={book.bookName}
             image={book.image}
             authors={book.authors}
+            rating={book.rating}
+            numRatings={book.numRatings}
           />
         ))
       )}
