@@ -6,7 +6,13 @@ const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
 // posting new users
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
+
+  const checkUser = await User.findOne({ email: req.body.email });
+  if (checkUser) {
+    return res.status(400).send('this email already exists');
+  }
+
   let user = new User({
     name: req.body.name,
     username: req.body.username,
@@ -86,6 +92,22 @@ router.post(`/login`, async (req, res) => {
   } else {
     res.status(400).send('wrong credentials');
   }
+});
+
+//Check Existing email and username
+router.post(`/checkExisting`, async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  const userName = await User.findOne({ username: req.body.username})
+
+  if (user) {
+    return res.status(400).send('yaad nhi kya yeh email already use kiya tha. Dusre ID se aa');
+  }
+  if (userName) {
+    return res.status(409).send('sorry username already exists');
+  }
+  else{
+    return res.status(200).send('good to go. you can register this user')
+  } 
 });
 
 // function to generate the jwt token for authorisation
