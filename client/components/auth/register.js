@@ -14,7 +14,8 @@ export class Register extends Component {
     lastName: '',
     stream: '',
     semester: '',
-    branch: ''
+    branch: '',
+    errors: {}
   };
 
   // go back to previous step
@@ -44,7 +45,8 @@ export class Register extends Component {
       lastName,
       stream,
       branch,
-      semester
+      semester,
+      errors = {}
     } = this.state;
 
     const values = {
@@ -55,7 +57,8 @@ export class Register extends Component {
       lastName,
       stream,
       branch,
-      semester
+      semester,
+      errors
     };
 
     switch (step) {
