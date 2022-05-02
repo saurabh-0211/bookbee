@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+/* @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 body {
   font-family: 'Montserrat', sans-serif;
@@ -39,7 +39,6 @@ fieldset:not(:first-of-type) {
 .fs-subtitle {
   font-weight: normal;
   font-size: 12px;
-  /* color: #666; */
   margin-bottom: 20px;
 }
 input,
@@ -84,7 +83,6 @@ input:focus,
 textarea:focus {
   border-color: #a0a0a0;
   outline: none;
-  /* color: #637373; */
 }
 
 .action-button {
@@ -181,25 +179,6 @@ li.active:after {
   }
 }
 
-/* 
-@keyframes gradient{
-  0% {
-    background-position: 25% 50%;
-  }
-  25%{
-    background-position: 50% 75%;
-  }
-	50% {
-		background-position: 75% 100%;
-  }
-  75%{
-    background-position: 100% 75%;
-  }
-	100% {
-		background-position: 75% 25%;
-	}
-} */
-
 .errorMsg {
   color: #cc0000;
   margin-bottom: 12px;
@@ -207,4 +186,4 @@ li.active:after {
 
 .alertMsg {
   display: none;
-}
+} */

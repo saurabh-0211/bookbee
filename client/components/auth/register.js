@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import UserDetails from './UserDetails';
+import PersonalDetails from './PersonalDetails';
+import Confirm from './Confirm';
+import Success from './Success';
 
 export class Register extends Component {
   state = {
@@ -40,8 +43,8 @@ export class Register extends Component {
       firstName,
       lastName,
       stream,
-      semester,
-      branch
+      branch,
+      semester
     } = this.state;
 
     const values = {
@@ -51,8 +54,8 @@ export class Register extends Component {
       firstName,
       lastName,
       stream,
-      semester,
-      branch
+      branch,
+      semester
     };
 
     switch (step) {
@@ -82,7 +85,7 @@ export class Register extends Component {
           />
         );
       case 4:
-        return <h1>Success</h1>;
+        return <Success />;
       // never forget the default case, otherwise VS code would be mad!
       default:
         console.log('This is a multi-step form built with React.');
