@@ -64,21 +64,22 @@ const booksSchema = mongoose.Schema({
     type: String,
     default: ''
   },
-  tags: [{
-    type: String
-  }],
+  tags: [
+    {
+      type: String
+    }
+  ],
   r_score: {
     type: Number,
     default: 0
   },
   numRatings: {
-    one:  {type: Number},
-    two:  {type: Number},
-    three:{type: Number},
-    four: {type: Number},
-    five: {type: Number}
+    one: { type: Number },
+    two: { type: Number },
+    three: { type: Number },
+    four: { type: Number },
+    five: { type: Number }
   }
-
 });
 
 exports.Book = mongoose.model('Book', booksSchema);
