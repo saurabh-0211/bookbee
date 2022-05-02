@@ -1,6 +1,7 @@
 import ReactStars from 'react-rating-stars-component';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import RatingStats from './components/RatingStats';
 
 const ratingChanged = (newRating) => {
   console.log(newRating);
@@ -27,7 +28,7 @@ class Details extends Component {
     if (this.state.loading) {
       return <h2>loading....</h2>;
     }
-    const { stream, subject, bookName, publisher, authors, image, rating } =
+    const { stream, subject, bookName, publisher, authors, image, rating, numRatings } =
       this.state;
     return (
       <div className="details">

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 // const { User } = require('../models/users');
 const asyncHandler = require('express-async-handler');
-const checkAuth = require('checkAuth.js');
+const checkAuth = require('./checkAuth.js');
 require('dotenv/config');
 
 const checkAdmin = asyncHandler(checkAuth,async(req,res,next)=>{

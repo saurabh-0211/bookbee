@@ -8,7 +8,15 @@ import Stack from '@mui/material/Stack';
 
 class Register extends Component {
   state = {
-    loading: 'true'
+    loading: 'true',
+    email: '',
+    password: '',
+    stream: '',
+    branch: '',
+    semester: '',
+    msg: null,
+    errors: {}
+    
   };
 
   async componentDidMount() {
@@ -24,6 +32,8 @@ class Register extends Component {
       errors: {}
     });
   }
+
+  
 
   validateForm = () => {
     let email = this.state.email;
@@ -57,6 +67,8 @@ class Register extends Component {
     });
     return formIsValid;
   };
+
+
 
   jQueryCode = () => {
     let current_field, next_field, prev_field, password, confirm_password;
