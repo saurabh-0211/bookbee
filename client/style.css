@@ -112,11 +112,15 @@ header > a, */
 
 header {
   color: #333;
-  /* font-size: 3px; */
   text-decoration: none;
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
+}
+
+.authors,
+.ratings {
+  color: #333;
 }
 
 /* header {
