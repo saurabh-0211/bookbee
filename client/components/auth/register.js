@@ -1,13 +1,12 @@
 import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import './register.css';
-import 'font-awesome/css/font-awesome.min.css';
-import $ from 'jquery';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import UserDetails from './UserDetails';
+import PersonalDetails from './PersonalDetails';
+import Confirm from './Confirm';
+import Success from './Success';
 
-class Register extends Component {
+export class Register extends Component {
   state = {
+<<<<<<< HEAD
     loading: 'true',
     email: '',
     password: '',
@@ -105,127 +104,92 @@ class Register extends Component {
         current_field.hide();
       }
     });
+=======
+    step: 1,
+    email: '',
+    username: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    stream: '',
+    semester: '',
+    branch: ''
+  };
 
-    $('.previous').on('click', function (e) {
-      current_field = $(this).parent();
-      prev_field = $(this).parent().prev();
-      $('#progressbar li')
-        .eq($('fieldset').index(current_field))
-        .removeClass('active');
-      prev_field.show();
-      current_field.hide();
-    });
+  // go back to previous step
+  prevStep = () => {
+    const { step } = this.state;
+    this.setState({ step: step - 1 });
+  };
+
+  // proceed to the next step
+  nextStep = () => {
+    const { step } = this.state;
+    this.setState({ step: step + 1 });
+  };
+>>>>>>> a98810035af06ee262d4c7574c20ae572539bd1f
+
+  // handle field change
+  handleChange = (input) => (e) => {
+    this.setState({ [input]: e.target.value });
   };
 
   render() {
-    if (this.state.loading) {
-      return <h2>loading....</h2>;
+    const { step } = this.state;
+    const {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      stream,
+      branch,
+      semester
+    } = this.state;
+
+    const values = {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      stream,
+      branch,
+      semester
+    };
+
+    switch (step) {
+      case 1:
+        return (
+          <UserDetails
+            nextStep={this.nextStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+      case 2:
+        return (
+          <PersonalDetails
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            handleChange={this.handleChange}
+            values={values}
+          />
+        );
+      case 3:
+        return (
+          <Confirm
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            values={values}
+          />
+        );
+      case 4:
+        return <Success />;
+      // never forget the default case, otherwise VS code would be mad!
+      default:
+        console.log('This is a multi-step form built with React.');
     }
-    return (
-      <form action="/register" method="POST" id="multistepsform">
-        <ul id="progressbar">
-          <li className="active">Account Setup</li>
-          <li>Personal Details</li>
-          <li>Social Profiles</li>
-        </ul>
-
-        <fieldset>
-          <h2 className="fs-title">Create your account</h2>
-          <h3 className="fs-subtitle"></h3>
-          <input type="text" name="email" placeholder="Email" />
-          <span id="password-span">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-            />
-            <i
-              id="hide-password"
-              className="fa fa-eye-slash toggle-password"
-            ></i>
-            <i id="show-password" className="fa fa-eye toggle-password"></i>
-          </span>
-          <input
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            placeholder="Confirm Password"
-          />
-          <div className="alertMsg">
-            <Stack sx={{ width: '100%' }} spacing={2}>
-              <Alert variant="filled" severity="error">
-                Entered passwords must be same
-              </Alert>
-            </Stack>
-          </div>
-
-          <input
-            type="button"
-            name="next"
-            id="nextButton"
-            className="next action-button"
-            value="Next"
-          />
-        </fieldset>
-
-        <fieldset>
-          <h2 className="fs-title">Personal Details</h2>
-          <h3 className="fs-subtitle">We will never sell it</h3>
-          <input
-            type="text"
-            id="fname"
-            name="first_name"
-            placeholder="First Name"
-          />
-          <input
-            type="text"
-            id="lname"
-            name="last_name"
-            placeholder="Last Name"
-          />
-          <input type="text" name="phone" placeholder="Phone" />
-          <input type="date" name="dob" placeholder="DOB" />
-          <textarea name="address" placeholder="Address"></textarea>
-          <input
-            type="button"
-            name="previous"
-            className="previous action-button"
-            value="Previous"
-          />
-
-          <input
-            type="button"
-            name="next"
-            className="next action-button"
-            value="Next"
-          />
-        </fieldset>
-        <fieldset>
-          <h2 className="fs-title">Social Profiles</h2>
-          <h3 className="fs-subtitle">Your presence on the social network</h3>
-          <input type="text" name="twitter" placeholder="Twitter" />
-          <input type="text" name="facebook" placeholder="Facebook" />
-          <input type="text" name="gplus" placeholder="Google Plus" />
-          <input
-            type="button"
-            name="previous"
-            className="previous action-button"
-            value="Previous"
-          />
-          <input
-            type="submit"
-            name="submit"
-            className="submit action-button"
-            value="Submit"
-          />
-        </fieldset>
-
-        <p className="member-login">
-          Already a member? <a href="login">Sign in</a>
-        </p>
-      </form>
-    );
   }
 }
 
