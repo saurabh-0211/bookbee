@@ -1,15 +1,18 @@
 import { Component } from 'react';
 import { Container, Typography, Grid, TextField, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios'
 
 const theme = createTheme();
-let newUser = true;
+
 class UserDetails extends Component {
   state = {
-    errors: {}
+    errors: {},
+    emailmsg: null,
+    usernamemsg: null
   };
 
-  checkExisting = ({ email, password }) => {
+  checkExisting = ({ email, username }) => {
     const config = {
       headers: {
         'content-type': 'application/json'
@@ -17,31 +20,38 @@ class UserDetails extends Component {
     };
 
     //request body
-    const body = JSON.stringify({ email, password });
+    const body = JSON.stringify({ email, username });
 
     axios
-      .post('http://localhost:3000/bookbee/users/register', body, config)
+      .post('http://localhost:3000/bookbee/users/checkExisting', body, config)
       .then((res) => {
         console.log(res.data);
-        newUser = false;
-        this.state.errors['email'] = "Don't try to fool us.";
+        this.props.nextStep();
       })
       .catch((err) => {
-        this.setState({ msg: err.response.data });
+        console.log(err.response.status);
+        console.log(this.state.errors);
+        if(err.response.status === 400){
+          this.setState({errors : {email: err.response.data, username: null}});
+        }
+        if(err.response.status === 409){
+          this.setState({errors : {email: null, username: err.response.data}});
+        }
       });
   };
 
   continue = (e) => {
     e.preventDefault();
     if (this.validateForm()) {
-      const { email, password } = this.props.values;
+      const { email, username } = this.props.values;
 
       const user = {
         email: email,
-        password: password
+        username: username
       };
-
-      this.props.nextStep();
+      
+      this.checkExisting(user);
+      //this.setState({newUser: false});
     }
   };
 
@@ -95,6 +105,7 @@ class UserDetails extends Component {
           <br />
           <br />
           <div className="errorMsg">{this.state.errors.email}</div>
+          
           <TextField
             placeholder="Username"
             label="Username"
@@ -106,6 +117,7 @@ class UserDetails extends Component {
           />
           <br />
           <br />
+          <div className="errorMsg">{this.state.errors.username}</div>
           <TextField
             placeholder="Password"
             label="Password"

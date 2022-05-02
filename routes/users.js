@@ -94,6 +94,22 @@ router.post(`/login`, async (req, res) => {
   }
 });
 
+//Check Existing email and username
+router.post(`/checkExisting`, async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  const userName = await User.findOne({ username: req.body.username})
+
+  if (user) {
+    return res.status(400).send('yaad nhi kya yeh email already use kiya tha. Dusre ID se aa');
+  }
+  if (userName) {
+    return res.status(409).send('sorry username already exists');
+  }
+  else{
+    return res.status(200).send('good to go. you can register this user')
+  } 
+});
+
 // function to generate the jwt token for authorisation
 const generateToken = (id) => {
   const secretKey = process.env.JWT_SECRET;
