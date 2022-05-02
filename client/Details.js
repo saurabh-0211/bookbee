@@ -1,7 +1,6 @@
 import ReactStars from 'react-rating-stars-component';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import RatingStats from './components/RatingStats';
 
 const ratingChanged = (newRating) => {
   console.log(newRating);

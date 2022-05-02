@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
 // posting new users
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
 
   const checkUser = await User.findOne({ email: req.body.email });
   if (checkUser) {
