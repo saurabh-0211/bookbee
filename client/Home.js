@@ -1,11 +1,11 @@
 import { Component } from 'react';
 
 class Home extends Component {
-  componentDidMount() {
-    console.log('hello');
-  }
   render() {
-    return <h2>You aren't logged in</h2>;
+    if (this.props.user) {
+      console.log(this.props.user);
+      return <h2> Hii, {this.props.user.name} </h2>;
+    }
   }
 }
 
