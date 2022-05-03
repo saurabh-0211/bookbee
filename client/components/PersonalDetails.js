@@ -16,6 +16,7 @@ const theme = createTheme();
 
 const SEMESTER = ['1', '2', '3', '4', '5', '6', '7', '8'];
 const BRANCH = ['CMPN', 'IT', 'EXTC', 'ELEX', 'CIVIL', 'MECH'];
+const STREAM = ['engineering', 'commerce'];
 class PersonalDetails extends Component {
   state = {
     semester: ''
@@ -53,14 +54,23 @@ class PersonalDetails extends Component {
           />
           <br />
           <br />
-          <TextField
-            placeholder="Stream"
-            label="Stream"
-            onChange={handleChange('stream')}
-            defaultValue={values.stream}
-            autoComplete="stream"
-            fullWidth
-          />
+          <FormControl fullWidth>
+            <InputLabel id="stream">Stream</InputLabel>
+            <Select
+              labelId="stream"
+              id="stream"
+              value={values.stream}
+              label="Stream"
+              onChange={handleChange('stream')}
+            >
+              <MenuItem />
+              {STREAM.map((stream) => (
+                <MenuItem value={stream} key={stream}>
+                  {stream}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <br />
           <br />
           <FormControl fullWidth>
