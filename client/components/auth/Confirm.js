@@ -26,16 +26,7 @@ class Confirm extends Component {
 
   render() {
     const {
-      values: {
-        email,
-        username,
-        password,
-        firstName,
-        lastName,
-        stream,
-        branch,
-        semester
-      }
+      values: { email, username, password, firstName, lastName, stream, branch, semester }
     } = this.props;
     return (
       <ThemeProvider theme={theme}>

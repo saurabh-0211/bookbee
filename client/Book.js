@@ -19,7 +19,7 @@ const Book = ({ id, bookName, image, authors, rating, numRatings }) => {
       </div>
       <div className="info">
         <h1>{bookName}</h1>
-        <h2>{authors}</h2>
+        <h2 className="authors">{authors}</h2>
         <ReactStars
           count={5}
           size={30}
@@ -31,7 +31,7 @@ const Book = ({ id, bookName, image, authors, rating, numRatings }) => {
           fullIcon={<i className="fa fa-star"></i>}
           activeColor="#ffd700"
         />
-        <span>No. of Ratings: {sum}</span>
+        <span className="ratings">No. of Ratings: {sum}</span>
       </div>
     </Link>
   );

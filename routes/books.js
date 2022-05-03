@@ -185,9 +185,7 @@ router.get('/sem/:semester', async (req, res) => {
   }
   const books = await Book.find({ semester: semNumber });
   if (!books) {
-    return res
-      .status(500)
-      .send('that particular semester books collection is empty');
+    return res.status(500).send('that particular semester books collection is empty');
   }
   return res.send(books);
 });
@@ -215,13 +213,9 @@ router.delete(`/:id`, async (req, res) => {
   Book.findByIdAndRemove(req.params.id)
     .then((book) => {
       if (book) {
-        return res
-          .status(200)
-          .json({ success: true, message: 'book deleted successfully' });
+        return res.status(200).json({ success: true, message: 'book deleted successfully' });
       } else {
-        return res
-          .status(404)
-          .json({ success: false, message: 'book not found' });
+        return res.status(404).json({ success: false, message: 'book not found' });
       }
     })
     .catch((err) => {
@@ -271,9 +265,7 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
   const book = await Book.findById(req.params.id);
 
   if (book) {
-    const alreadyReviewed = book.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
-    );
+    const alreadyReviewed = book.reviews.find((r) => r.user.toString() === req.user._id.toString());
 
     if (alreadyReviewed) {
       res.status(400);
@@ -296,9 +288,7 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 
     book.numReviews = book.reviews.length;
 
-    book.rating =
-      book.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      book.reviews.length;
+    book.rating = book.reviews.reduce((acc, item) => item.rating + acc, 0) / book.reviews.length;
 
     //update numratings
     switch (rating) {

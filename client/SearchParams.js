@@ -27,9 +27,15 @@ const SearchParams = () => {
 
   useEffect(() => requestBooks(), [page]);
 
-  const pageIncr = () => {setPage(page+1)};
-  const pageDecr = () =>{(page === 1)?setPage(1):setPage(page-1)}
-  const pageReset = () => {setPage(1)};
+  const pageIncr = () => {
+    setPage(page + 1);
+  };
+  const pageDecr = () => {
+    page === 1 ? setPage(1) : setPage(page - 1);
+  };
+  const pageReset = () => {
+    setPage(1);
+  };
 
   return (
     <div className="search-params">
@@ -47,11 +53,7 @@ const SearchParams = () => {
           placeholder="Titles, Book.."
         />
         <label htmlFor="semester">Semester</label>
-        <select
-          id="semester"
-          value={semester}
-          onChange={(e) => setSemester(e.target.value)}
-        >
+        <select id="semester" value={semester} onChange={(e) => setSemester(e.target.value)}>
           <option />
           {SEMESTER.map((semester) => (
             <option value={semester} key={semester}>
@@ -61,11 +63,7 @@ const SearchParams = () => {
         </select>
 
         <label htmlFor="subject">Subject</label>
-        <select
-          id="subject"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-        >
+        <select id="subject" value={subject} onChange={(e) => setSubject(e.target.value)}>
           <option />
           {subjects.map((subject) => (
             <option value={subject} key={subject}>

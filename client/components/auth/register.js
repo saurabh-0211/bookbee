@@ -64,11 +64,7 @@ export class Register extends Component {
     switch (step) {
       case 1:
         return (
-          <UserDetails
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            values={values}
-          />
+          <UserDetails nextStep={this.nextStep} handleChange={this.handleChange} values={values} />
         );
       case 2:
         return (
@@ -80,13 +76,7 @@ export class Register extends Component {
           />
         );
       case 3:
-        return (
-          <Confirm
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            values={values}
-          />
-        );
+        return <Confirm nextStep={this.nextStep} prevStep={this.prevStep} values={values} />;
       case 4:
         return <Success />;
       // never forget the default case, otherwise VS code would be mad!

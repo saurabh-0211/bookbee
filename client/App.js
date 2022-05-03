@@ -5,15 +5,14 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import SearchParams from './SearchParams';
 import Details from './Details';
+import Navbar from './components/navbar';
 
 const App = () => {
   return (
     <div>
       <Router>
         <header>
-          <Link to="/">
-            <h1>BookBee</h1>
-          </Link>
+          <Navbar />
         </header>
         <Switch>
           <Route path="/details/:id">
@@ -22,6 +21,7 @@ const App = () => {
           <Route path="/login">
             <Login />
           </Route>
+          <Route path="/navbar"></Route>
           <Route path="/register">
             <Register />
           </Route>

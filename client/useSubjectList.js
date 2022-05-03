@@ -34,9 +34,7 @@ export default function useSubjectList(semester) {
       //   });
 
       axios
-        .get(
-          `http://localhost:3000/bookbee/books/getSubjectNames/?semester=${semester}`
-        )
+        .get(`http://localhost:3000/bookbee/books/getSubjectNames/?semester=${semester}`)
         .then((response) => {
           const arr = response.data;
 
