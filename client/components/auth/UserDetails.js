@@ -51,7 +51,6 @@ class UserDetails extends Component {
       };
       
       this.checkExisting(user);
-      //this.setState({newUser: false});
     }
   };
 
