@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
+const checkAuth = require('../middleware/checkAuth');
 
 //Auxillary function
 //to check if semester is a numeric data and returns true if it is
@@ -51,19 +52,27 @@ router.get(`/`, async (req, res) => {
   res.send(userList);
 });
 
-// getting a specific user data from the database
-router.get(`/:id`, async (req, res) => {
-  const user = await User.findById(req.params.id).select('-passwordHash');
+//getting a userdata from token
+router.get('/user', checkAuth, async (req, res) => {
+  const user = req.user;
+  return res.send(user);
+})
 
-  if (!user) {
-    res.status(500).json({ message: 'given user id does not exist' });
-  }
-  res.send(user);
-});
+// getting a specific user data from the database
+// router.get(`/:id`, async (req, res) => {
+//   const user = await User.findById(req.params.id).select('-passwordHash');
+
+//   if (!user) {
+//     res.status(500).json({ message: 'given user id does not exist' });
+//   }
+//   res.send(user);
+// });
+
 
 // updating the user data if he/she wants to
-router.put('/:id', async (req, res) => {
-  const userExists = await User.findById(req.params.id);
+router.put('/userUpdate', async (req, res) => {
+  const theUser = req.user;
+  const userExists = await User.findById(theUser._id);
   let newPassword;
   if (req.body.password) {
     newPassword = bcrypt.hashSync(req.body.password, 10);
@@ -87,7 +96,7 @@ router.put('/:id', async (req, res) => {
   if (!user) {
     return res.status(400).send('the user can not be updated');
   }
-  res.send(category);
+  return res.send('user update');
 });
 
 // login
