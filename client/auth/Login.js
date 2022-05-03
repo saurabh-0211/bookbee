@@ -30,14 +30,15 @@ class Login extends Component {
         localStorage.setItem('token', res.data.token);
         console.log(res.data);
         isAuthenticated = true;
+        this.setState({ msg: null });
       })
       .catch((err) => {
         this.setState({ msg: err.response.data });
       });
   };
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = (input) => (e) => {
+    this.setState({ [input]: e.target.value });
   };
 
   onSubmit = (e) => {
@@ -95,8 +96,8 @@ class Login extends Component {
         <TextField
           placeholder="Email Address"
           label="Email Address"
-          onChange={this.onChange}
-          // defaultValue={values.email}
+          onChange={this.handleChange('email')}
+          defaultValue={this.state.email}
           // variant="outlined"
           autoComplete="email"
           fullWidth
@@ -108,8 +109,8 @@ class Login extends Component {
         <TextField
           placeholder="Password"
           label="Password"
-          onChange={this.onChange}
-          // defaultValue={values.password}
+          onChange={this.handleChange('password')}
+          defaultValue={this.state.password}
           autoComplete="password"
           fullWidth
         />
