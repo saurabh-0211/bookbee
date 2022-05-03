@@ -5,7 +5,6 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Button,
   Avatar,
   Box,
   Tooltip,
@@ -56,8 +55,14 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={logo} alt="logo" className={classes.logo} />
-
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          >
+            <img src={logo} alt="logo" className={classes.logo} />
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -100,7 +105,7 @@ const Navbar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            LOGO
+            <img src={logo} alt="logo" className={classes.logo} />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <MenuItem key="home" onClick={handleCloseNavMenu}>
