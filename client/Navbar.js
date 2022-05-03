@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = () => {
+const Navbar = (props) => {
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -50,6 +50,57 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  console.log(props.user);
+  let buttons;
+  if (props.user) {
+    buttons = (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="Open settings">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          <MenuItem key="profile" onClick={handleCloseUserMenu}>
+            <Link to="/profile" className={classes.link}>
+              Profile
+            </Link>
+          </MenuItem>
+          <MenuItem key="logout" onClick={() => localStorage.clear()}>
+            <Link to="/" className={classes.link}>
+              Logout
+            </Link>
+          </MenuItem>
+        </Menu>
+      </Box>
+    );
+  } else {
+    buttons = (
+      <Box sx={{ flexGrow: 0 }}>
+        <MenuItem key="login" onClick={handleCloseNavMenu}>
+          <Link to="/login" className={classes.link}>
+            Login
+          </Link>
+        </MenuItem>
+      </Box>
+    );
+  }
 
   return (
     <AppBar position="static">
@@ -115,35 +166,7 @@ const Navbar = () => {
             </MenuItem>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {buttons}
         </Toolbar>
       </Container>
     </AppBar>

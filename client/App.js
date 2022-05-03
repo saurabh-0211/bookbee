@@ -36,7 +36,7 @@ class App extends Component {
       <div>
         <Router>
           <header>
-            <Navbar />
+            <Navbar user={this.state.user} />
           </header>
           <Switch>
             <Route path="/details/:id">
