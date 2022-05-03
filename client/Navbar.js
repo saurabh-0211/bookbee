@@ -53,7 +53,7 @@ const Navbar = (props) => {
 
   console.log(props.user);
   let buttons;
-  if (props.user === true) {
+  if (props.user.loading === true) {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
