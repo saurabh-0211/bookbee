@@ -2,7 +2,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Typography, Grid, TextField, Button, Alert, Stack } from '@mui/material';
+import { Container, Typography, Grid, TextField, Alert, Stack, Button } from '@mui/material';
 
 let isAuthenticated = false;
 class Login extends Component {
@@ -91,32 +91,42 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="App">
-        <form className="form">
-          <CustomInput
-            labelText="Email"
-            id="email"
-            formControlProps={{
-              fullWidth: true
-            }}
-            handleChange={this.handleChange}
-            type="text"
-          />
-          <CustomInput
-            labelText="Password"
-            id="password"
-            formControlProps={{
-              fullWidth: true
-            }}
-            handleChange={this.handleChange}
-            type="password"
-          />
+      <Container component="main" maxWidth="xs">
+        <TextField
+          placeholder="Email Address"
+          label="Email Address"
+          onChange={this.onChange}
+          // defaultValue={values.email}
+          // variant="outlined"
+          autoComplete="email"
+          fullWidth
+        />
+        <br />
+        <br />
+        <div className="errorMsg">{this.state.errors.emailid}</div>
 
-          <Button type="button" color="primary" className="form__custom-button">
-            Log in
-          </Button>
-        </form>
-      </div>
+        <TextField
+          placeholder="Password"
+          label="Password"
+          onChange={this.onChange}
+          // defaultValue={values.password}
+          autoComplete="password"
+          fullWidth
+        />
+        <br />
+        <br />
+        <div className="errorMsg">{this.state.errors.password}</div>
+        <Button onClick={this.onSubmit} type="submit" variant="contained" color="primary" fullWidth>
+          Login
+        </Button>
+        {this.state.msg ? (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert variant="filled" severity="error">
+              {this.state.msg}
+            </Alert>
+          </Stack>
+        ) : null}
+      </Container>
 
       // <form action="/login" method="POST" id="multistepsform">
       //   {/* <p style="margin-top: 150px;"></p> */}
@@ -148,14 +158,14 @@ class Login extends Component {
       //       value="Login"
       //     />
 
-      //     {/*error alert */}
-      //     {this.state.msg ? (
-      //       <Stack sx={{ width: '100%' }} spacing={2}>
-      //         <Alert variant="filled" severity="error">
-      //           {this.state.msg}
-      //         </Alert>
-      //       </Stack>
-      //     ) : null}
+      // {/*error alert */}
+      // {this.state.msg ? (
+      //   <Stack sx={{ width: '100%' }} spacing={2}>
+      //     <Alert variant="filled" severity="error">
+      //       {this.state.msg}
+      //     </Alert>
+      //   </Stack>
+      // ) : null}
 
       //     <p className="forgot-password">
       //       <a href="./forget-pass">Forgot Password</a>
