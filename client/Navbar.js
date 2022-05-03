@@ -13,7 +13,7 @@ import {
   MenuItem
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from '../../public/bookbee-logo.png';
+import logo from '../public/bookbee-logo.png';
 import { makeStyles } from '@mui/styles';
 import { Link } from 'react-router-dom';
 
