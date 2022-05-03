@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import UserDetails from './UserDetails';
-import PersonalDetails from './PersonalDetails';
-import Confirm from './Confirm';
-import Success from './Success';
+import UserDetails from '../components/UserDetails';
+import PersonalDetails from '../components/PersonalDetails';
+import Confirm from '../components/Confirm';
+import Success from '../components/Success';
 import axios from 'axios';
 
 export class Register extends Component {

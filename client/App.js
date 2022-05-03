@@ -1,11 +1,11 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
+import Login from './auth/Login';
+import Register from './auth/Register';
 import SearchParams from './SearchParams';
 import Details from './Details';
-import Navbar from './components/navbar';
+import Navbar from './Navbar';
 
 const App = () => {
   return (
