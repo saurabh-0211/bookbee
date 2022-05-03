@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import axios from 'axios';
 import {
   Container,
@@ -104,6 +105,9 @@ class Login extends Component {
   }
 
   render() {
+    if (isAuthenticated) {
+      return <Redirect to={{ pathname: '/home' }} />;
+    }
     return (
       <Container component="main" maxWidth="xs">
         <TextField
