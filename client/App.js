@@ -6,6 +6,7 @@ import Register from './auth/Register';
 import SearchParams from './SearchParams';
 import Details from './Details';
 import Navbar from './Navbar';
+import Home from './Home';
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
           <Route path="/navbar"></Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/home">
+            <Home />
           </Route>
           <Route path="/">
             <SearchParams />

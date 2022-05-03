@@ -1,4 +1,3 @@
-import 'font-awesome/css/font-awesome.min.css';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
