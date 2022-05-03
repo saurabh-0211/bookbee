@@ -9,9 +9,7 @@ class Details extends Component {
   state = { loading: true };
 
   async componentDidMount() {
-    const res = await fetch(
-      `http://localhost:3000/bookbee/books/${this.props.match.params.id}`
-    );
+    const res = await fetch(`http://localhost:3000/bookbee/books/${this.props.match.params.id}`);
     const json = await res.json();
     this.setState(
       Object.assign(
@@ -27,16 +25,7 @@ class Details extends Component {
     if (this.state.loading) {
       return <h2>loading....</h2>;
     }
-    const {
-      stream,
-      subject,
-      bookName,
-      publisher,
-      authors,
-      image,
-      rating,
-      numRatings
-    } = this.state;
+    const { stream, subject, bookName, publisher, authors, image, rating, numRatings } = this.state;
     return (
       <div className="details">
         <div className="carousel">

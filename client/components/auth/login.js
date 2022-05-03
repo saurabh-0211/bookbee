@@ -2,9 +2,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import './register.css';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import { Container, Typography, Grid, TextField, Button, Alert, Stack } from '@mui/material';
 
 let isAuthenticated = false;
 class Login extends Component {
@@ -98,13 +96,7 @@ class Login extends Component {
         <fieldset>
           <h2 className="fs-title">Login to your Account</h2>
           <h3 className="fs-subtitle"></h3>
-          <input
-            type="text"
-            name="email"
-            onChange={this.onChange}
-            placeholder="Email"
-            required
-          />
+          <input type="text" name="email" onChange={this.onChange} placeholder="Email" required />
           <div className="errorMsg">{this.state.errors.emailid}</div>
 
           <span id="password-span">
@@ -116,10 +108,7 @@ class Login extends Component {
               placeholder="Password"
               required
             />
-            <i
-              id="hide-password"
-              className="fa fa-eye-slash toggle-password"
-            ></i>
+            <i id="hide-password" className="fa fa-eye-slash toggle-password"></i>
             <i id="show-password" className="far fa-eye toggle-password"></i>
           </span>
           <div className="errorMsg">{this.state.errors.password}</div>

@@ -99,9 +99,7 @@ router.post(`/checkExisting`, async (req, res) => {
   const userName = await User.findOne({ username: req.body.username });
 
   if (user) {
-    return res
-      .status(400)
-      .send('yaad nhi kya yeh email already use kiya tha. Dusre ID se aa');
+    return res.status(400).send('yaad nhi kya yeh email already use kiya tha. Dusre ID se aa');
   }
   if (userName) {
     return res.status(409).send('sorry username already exists');
