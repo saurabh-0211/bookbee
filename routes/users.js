@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
-
 //Auxillary function
 //to check if semester is a numeric data and returns true if it is
 function isNumeric(str) {
@@ -15,7 +14,6 @@ function isNumeric(str) {
 
 // posting new users
 router.post('/register', async (req, res) => {
-
   //check for existing user before continuing
   const checkUser = await User.findOne({ email: req.body.email });
   if (checkUser) {

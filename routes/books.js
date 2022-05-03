@@ -91,6 +91,7 @@ router.get('/', async (req, res) => {
   const nPerPage = 5; // number of records per page
 
   filteredBooks = await Book.find(filters)
+    .sort({ r_score: -1 })
     .skip((pageNumber - 1) * nPerPage)
     .limit(nPerPage);
 

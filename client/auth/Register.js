@@ -20,7 +20,6 @@ export class Register extends Component {
   };
 
   register = () => {
-
     const {
       email,
       username,
@@ -31,8 +30,8 @@ export class Register extends Component {
       branch,
       semester,
       errors = {}
-    } = this.state
-    const name = firstName+' '+lastName;
+    } = this.state;
+    const name = firstName + ' ' + lastName;
     //Headers
     const config = {
       headers: {
@@ -48,12 +47,12 @@ export class Register extends Component {
       .then((res) => {
         localStorage.setItem('token', res.data.token);
         console.log(res.data);
-        this.setState({errors: {msg: null} });
+        this.setState({ errors: { msg: null } });
         //after successfull registration next page success will be called
         this.nextStep();
       })
       .catch((err) => {
-        this.setState({errors: {msg: err.response.data} });
+        this.setState({ errors: { msg: err.response.data } });
       });
   };
 
@@ -115,7 +114,14 @@ export class Register extends Component {
           />
         );
       case 3:
-        return <Confirm register={this.register} nextStep={this.nextStep} prevStep={this.prevStep} values={values} />;
+        return (
+          <Confirm
+            register={this.register}
+            nextStep={this.nextStep}
+            prevStep={this.prevStep}
+            values={values}
+          />
+        );
       case 4:
         return <Success />;
       // never forget the default case, otherwise VS code would be mad!
