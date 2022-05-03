@@ -8,8 +8,6 @@ const theme = createTheme();
 class UserDetails extends Component {
   state = {
     errors: {},
-    emailmsg: null,
-    usernamemsg: null
   };
 
   checkExisting = ({ email, username }) => {
@@ -55,7 +53,6 @@ class UserDetails extends Component {
       };
 
       this.checkExisting(user);
-      //this.setState({newUser: false});
     }
   };
 

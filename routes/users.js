@@ -5,17 +5,30 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
+
+//Auxillary function
+//to check if semester is a numeric data and returns true if it is
+function isNumeric(str) {
+  if (typeof str != 'string') return false;
+  return !isNaN(str) && !isNaN(parseFloat(str));
+}
+
 // posting new users
 router.post('/register', async (req, res) => {
+
+  //check for existing user before continuing
   const checkUser = await User.findOne({ email: req.body.email });
   if (checkUser) {
     return res.status(400).send('this email already exists');
   }
 
+  if (!isNumeric(req.body.semester)) {
+    return res.status(400).send('Bad request very very bad request');
+  }
+
   let user = new User({
     name: req.body.name,
     username: req.body.username,
-    isAdmin: req.body.isAdmin,
     email: req.body.email,
     passwordHash: bcrypt.hashSync(req.body.password, 10),
     stream: req.body.stream,
@@ -27,7 +40,7 @@ router.post('/register', async (req, res) => {
   if (!user) {
     return res.status(404).send('sorry the user can not be created');
   }
-  res.send(user);
+  return res.send(user);
 });
 
 // getting all users data from the database
