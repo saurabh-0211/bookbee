@@ -3,6 +3,7 @@ import UserDetails from './UserDetails';
 import PersonalDetails from './PersonalDetails';
 import Confirm from './Confirm';
 import Success from './Success';
+import axios from 'axios';
 
 export class Register extends Component {
   state = {
@@ -16,6 +17,44 @@ export class Register extends Component {
     semester: '',
     branch: '',
     errors: {}
+  };
+
+  register = () => {
+
+    const {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      stream,
+      branch,
+      semester,
+      errors = {}
+    } = this.state
+    const name = firstName+' '+lastName;
+    //Headers
+    const config = {
+      headers: {
+        'content-type': 'application/json'
+      }
+    };
+
+    //request body
+    const body = JSON.stringify({ name, username, email, password, stream, branch, semester });
+
+    axios
+      .post('http://localhost:3000/bookbee/users/register', body, config)
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        console.log(res.data);
+        this.setState({errors: {msg: null} });
+        //after successfull registration next page success will be called
+        this.nextStep();
+      })
+      .catch((err) => {
+        this.setState({errors: {msg: err.response.data} });
+      });
   };
 
   // go back to previous step
@@ -76,7 +115,7 @@ export class Register extends Component {
           />
         );
       case 3:
-        return <Confirm nextStep={this.nextStep} prevStep={this.prevStep} values={values} />;
+        return <Confirm register={this.register} nextStep={this.nextStep} prevStep={this.prevStep} values={values} />;
       case 4:
         return <Success />;
       // never forget the default case, otherwise VS code would be mad!

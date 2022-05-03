@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
   if (!user) {
     return res.status(404).send('sorry the user can not be created');
   }
-  res.send(user);
+  return res.send(user);
 });
 
 // getting all users data from the database

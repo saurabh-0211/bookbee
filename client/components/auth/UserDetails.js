@@ -8,8 +8,6 @@ const theme = createTheme();
 class UserDetails extends Component {
   state = {
     errors: {},
-    emailmsg: null,
-    usernamemsg: null
   };
 
   checkExisting = ({ email, username }) => {
