@@ -2,16 +2,30 @@ import 'font-awesome/css/font-awesome.min.css';
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Typography, Grid, TextField, Alert, Stack, Button } from '@mui/material';
+import {
+  Container,
+  TextField,
+  Alert,
+  Stack,
+  Button,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 let isAuthenticated = false;
+
 class Login extends Component {
   state = {
     email: '',
     password: '',
     msg: null,
+    showPassword: true,
     errors: {}
   };
+
+  handleClickShowPassword = () => this.setState({ showPassword: !this.state.showPassword });
+  handleMouseDownPassword = () => this.setState({ showPassword: !this.state.showPassword });
 
   login = ({ email, password }) => {
     //Headers
@@ -106,12 +120,25 @@ class Login extends Component {
         <div className="errorMsg">{this.state.errors.emailid}</div>
 
         <TextField
-          type="password"
           label="Password"
+          type={this.state.showPassword ? 'text' : 'password'}
           onChange={this.handleChange('password')}
           defaultValue={this.state.password}
           autoComplete="password"
           fullWidth
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={this.handleClickShowPassword}
+                  onMouseDown={this.handleMouseDownPassword}
+                >
+                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
         <br />
         <br />

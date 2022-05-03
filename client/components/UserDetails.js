@@ -1,5 +1,14 @@
 import { Component } from 'react';
-import { Container, Typography, Grid, TextField, Button } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 
@@ -7,8 +16,12 @@ const theme = createTheme();
 
 class UserDetails extends Component {
   state = {
+    showPassword: true,
     errors: {}
   };
+
+  handleClickShowPassword = () => this.setState({ showPassword: !this.state.showPassword });
+  handleMouseDownPassword = () => this.setState({ showPassword: !this.state.showPassword });
 
   checkExisting = ({ email, username }) => {
     const config = {
@@ -120,11 +133,24 @@ class UserDetails extends Component {
           <div className="errorMsg">{this.state.errors.username}</div>
           <TextField
             label="Password"
-            type="password"
+            type={this.state.showPassword ? 'text' : 'password'}
             onChange={handleChange('password')}
-            defaultValue={values.password}
+            defaultValue={this.state.password}
             autoComplete="password"
             fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={this.handleClickShowPassword}
+                    onMouseDown={this.handleMouseDownPassword}
+                  >
+                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
           <br />
           <br />
