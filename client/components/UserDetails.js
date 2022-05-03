@@ -7,7 +7,7 @@ const theme = createTheme();
 
 class UserDetails extends Component {
   state = {
-    errors: {},
+    errors: {}
   };
 
   checkExisting = ({ email, username }) => {
@@ -108,7 +108,6 @@ class UserDetails extends Component {
           <div className="errorMsg">{this.state.errors.email}</div>
 
           <TextField
-            placeholder="Username"
             label="Username"
             onChange={handleChange('username')}
             defaultValue={values.username}
@@ -120,8 +119,8 @@ class UserDetails extends Component {
           <br />
           <div className="errorMsg">{this.state.errors.username}</div>
           <TextField
-            placeholder="Password"
             label="Password"
+            type="password"
             onChange={handleChange('password')}
             defaultValue={values.password}
             autoComplete="password"

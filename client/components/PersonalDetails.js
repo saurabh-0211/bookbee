@@ -37,7 +37,6 @@ class PersonalDetails extends Component {
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <TextField
-            placeholder="First Name"
             label="First Name"
             onChange={handleChange('firstName')}
             defaultValue={values.firstName}
@@ -46,7 +45,6 @@ class PersonalDetails extends Component {
           <br />
           <br />
           <TextField
-            placeholder="Last Name"
             label="Last Name"
             onChange={handleChange('lastName')}
             defaultValue={values.lastName}

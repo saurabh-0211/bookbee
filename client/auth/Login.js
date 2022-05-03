@@ -94,7 +94,6 @@ class Login extends Component {
     return (
       <Container component="main" maxWidth="xs">
         <TextField
-          placeholder="Email Address"
           label="Email Address"
           onChange={this.handleChange('email')}
           defaultValue={this.state.email}
@@ -107,7 +106,7 @@ class Login extends Component {
         <div className="errorMsg">{this.state.errors.emailid}</div>
 
         <TextField
-          placeholder="Password"
+          type="password"
           label="Password"
           onChange={this.handleChange('password')}
           defaultValue={this.state.password}
@@ -128,54 +127,6 @@ class Login extends Component {
           </Stack>
         ) : null}
       </Container>
-
-      // <form action="/login" method="POST" id="multistepsform">
-      //   {/* <p style="margin-top: 150px;"></p> */}
-      //   <fieldset>
-      //     <h2 className="fs-title">Login to your Account</h2>
-      //     <h3 className="fs-subtitle"></h3>
-      //     <input type="text" name="email" onChange={this.onChange} placeholder="Email" required />
-      //     <div className="errorMsg">{this.state.errors.emailid}</div>
-
-      //     <span id="password-span">
-      //       <input
-      //         type="password"
-      //         onChange={this.onChange}
-      //         id="password"
-      //         name="password"
-      //         placeholder="Password"
-      //         required
-      //       />
-      //       <i id="hide-password" className="fa fa-eye-slash toggle-password"></i>
-      //       <i id="show-password" className="far fa-eye toggle-password"></i>
-      //     </span>
-      //     <div className="errorMsg">{this.state.errors.password}</div>
-
-      //     <input
-      //       type="submit"
-      //       name="submit"
-      //       onClick={this.onSubmit}
-      //       className="submit action-button"
-      //       value="Login"
-      //     />
-
-      // {/*error alert */}
-      // {this.state.msg ? (
-      //   <Stack sx={{ width: '100%' }} spacing={2}>
-      //     <Alert variant="filled" severity="error">
-      //       {this.state.msg}
-      //     </Alert>
-      //   </Stack>
-      // ) : null}
-
-      //     <p className="forgot-password">
-      //       <a href="./forget-pass">Forgot Password</a>
-      //     </p>
-      //   </fieldset>
-      //   <p className="member-login">
-      //     Not yet a member? <a href="register">Sign up</a>
-      //   </p>
-      // </form>
     );
   }
 }
