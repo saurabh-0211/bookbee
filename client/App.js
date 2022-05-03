@@ -11,7 +11,8 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
-    user: {}
+    user: {},
+    loading: false
   };
   componentDidMount() {
     const config = {
