@@ -5,7 +5,7 @@ class Home extends Component {
     if (this.props.user.loading === true) {
       return <h2> Hii, {this.props.user.user.name} </h2>;
     } else {
-      return <h2> hello</h2>;
+      return <h2> Hello</h2>;
     }
   }
 }

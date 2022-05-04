@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = (props) => {
+const Navbar = ({ user }) => {
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -51,9 +51,9 @@ const Navbar = (props) => {
     setAnchorElUser(null);
   };
 
-  console.log(props.user);
+  console.log(user);
   let buttons;
-  if (props.user.loading === true) {
+  if (user.loading === true) {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
