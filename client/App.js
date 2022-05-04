@@ -15,21 +15,23 @@ class App extends Component {
     loading: false
   };
   componentDidMount() {
-    const config = {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    };
-    axios
-      .get('http://localhost:3000/bookbee/users/user', config)
-      .then((res) => {
-        this.setState({
-          user: res.data
+    if (localStorage.getItem('token')) {
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      };
+      axios
+        .get('http://localhost:3000/bookbee/users/user', config)
+        .then((res) => {
+          this.setState({
+            user: res.data
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }
   }
 
   render() {
@@ -51,6 +53,7 @@ class App extends Component {
               <Register />
             </Route>
             <Route exact path="/home" component={() => <Home user={this.state.user} />} />
+            {/* <Route path="/home" render={(props) => <Home {...props} />} /> */}
             <Route path="/">
               <SearchParams />
             </Route>
