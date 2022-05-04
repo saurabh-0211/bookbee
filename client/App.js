@@ -10,50 +10,97 @@ import Home from './Home';
 import axios from 'axios';
 
 class App extends Component {
+
+
   state = {
+    loggedIn: false,
     user: {},
     loading: false
   };
+
   componentDidMount() {
-    const config = {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      }
-    };
-    axios
-      .get('http://localhost:3000/bookbee/users/user', config)
-      .then((res) => {
-        this.setState({
-          user: res.data,
-          loading: true
+
+    if(localStorage.getItem('token')){
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      };
+      axios
+        .get('http://localhost:3000/bookbee/users/user', config)
+        .then((res) => {
+          console.log('hello')
+          this.setState({
+            loggedIn: true,
+            user: res.data,
+            loading: true
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }
   }
+
+  componentDidUpdate(prevProps, prevState){
+
+    if(this.state.loggedIn != prevState.loggedIn){
+      if(localStorage.getItem('token')){
+        const config = {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          }
+        };
+        axios
+          .get('http://localhost:3000/bookbee/users/user', config)
+          .then((res) => {
+            console.log('hello')
+            this.setState({
+              loggedIn: true,
+              user: res.data,
+              loading: true
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      else{
+        this.setState({
+          loggedIn: false,
+          user: null,
+          loading: false
+        });
+      }
+    }
+  }
+
+  handleLogin = (e) => {
+    this.setState({ loggedIn: e });
+  };
+
 
   render() {
     return (
       <div>
         <Router>
           <header>
-            <Navbar user={this.state} />
+            <Navbar user={this.state} handleLogin={this.handleLogin} />
           </header>
           <Switch>
             <Route path="/details/:id">
               <Details />
             </Route>
             <Route path="/login">
-              <Login />
+              <Login user={this.state} handleLogin={this.handleLogin}/>
             </Route>
             <Route path="/navbar"></Route>
             <Route path="/register">
-              <Register />
+              <Register handleLogin={this.handleLogin}/>
             </Route>
             <Route exact path="/home" component={() => <Home user={this.state} />} />
             <Route path="/">
-              <SearchParams />
+              <SearchParams user={this.state}/>
             </Route>
           </Switch>
         </Router>

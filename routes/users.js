@@ -49,9 +49,9 @@ router.get(`/`, async (req, res) => {
   const userList = await User.find().select('-passwordHash');
 
   if (!userList) {
-    res.status(500).json({ success: false });
+    return res.status(500).json({ success: false });
   }
-  res.send(userList);
+  return res.send(userList);
 });
 
 //getting a userdata from token
@@ -108,9 +108,9 @@ router.post(`/login`, async (req, res) => {
   }
   if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
     const token = generateToken(user._id);
-    res.status(200).send({ user: user.email, token: token });
+    return res.status(200).send({ user: user.email, token: token });
   } else {
-    res.status(400).send('wrong credentials');
+    return res.status(400).send('wrong credentials');
   }
 });
 

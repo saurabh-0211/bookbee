@@ -45,6 +45,7 @@ class Login extends Component {
         // console.log(res.data);
         isAuthenticated = true;
         this.setState({ msg: null });
+        this.props.handleLogin(true);
       })
       .catch((err) => {
         this.setState({ msg: err.response.data });
