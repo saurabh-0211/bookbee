@@ -36,10 +36,12 @@ router.post('/register', async (req, res) => {
   });
 
   user = await user.save();
+  
   if (!user) {
     return res.status(404).send('sorry the user can not be created');
   }
-  return res.send(user);
+  const token = generateToken(user._id);
+  return res.status(200).send({ user: user.email, token: token, msg: 'user registered successfully' });
 });
 
 // getting all users data from the database
