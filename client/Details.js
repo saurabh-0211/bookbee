@@ -21,14 +21,21 @@ class Details extends Component {
     if (this.state.loading) {
       return <h2>loading....</h2>;
     }
-    const { stream, subject, bookName, publisher, authors, image, rating, numRatings } = this.state;
+    const { stream, subject, bookName, publisher, authors, image, rating, numRatings, numReviews } =
+      this.state;
     return (
       <div className="details">
-        <div className="carousel">
+        <div className="book-img">
           <img src={image} alt={bookName} />
         </div>
-        <div>
-          <h1>{`${subject} -${bookName}`}</h1>
+        <div className="book-details">
+          <div className="book-rating">
+            <Rating name="read-only" size="small" value={rating} readOnly />
+            <span>
+              {rating} Ratings & {numReviews} Reviews
+            </span>
+          </div>
+          <p>{`${subject} -${bookName}`}</p>
           <h2>{`${stream} - ${authors} - ${publisher}`}</h2>
           <Rating
             name="simple-controlled"
