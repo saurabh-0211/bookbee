@@ -5,7 +5,6 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Button,
   Avatar,
   Box,
   Tooltip,
@@ -26,13 +25,18 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'white',
     fontSize: '20px'
+  },
+  login: {
+    textDecoration: 'none',
+    color: '#333',
+    fontSize: '20px'
   }
 }));
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -52,12 +56,69 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  console.log(user);
+  let buttons;
+  if (user.loading === true) {
+    buttons = (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="Open settings">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          <MenuItem key="profile" onClick={handleCloseUserMenu}>
+            <Link to="/profile" className={classes.login}>
+              Profile
+            </Link>
+          </MenuItem>
+          <MenuItem key="logout" onClick={() => localStorage.clear()}>
+            <Link to="/" className={classes.login}>
+              Logout
+            </Link>
+          </MenuItem>
+        </Menu>
+      </Box>
+    );
+  } else {
+    buttons = (
+      <Box sx={{ flexGrow: 0 }}>
+        <MenuItem key="login" onClick={handleCloseNavMenu}>
+          <Link to="/login" className={classes.link}>
+            Login
+          </Link>
+        </MenuItem>
+      </Box>
+    );
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={logo} alt="logo" className={classes.logo} />
-
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          >
+            <img src={logo} alt="logo" className={classes.logo} />
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -100,7 +161,7 @@ const Navbar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            LOGO
+            <img src={logo} alt="logo" className={classes.logo} />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <MenuItem key="home" onClick={handleCloseNavMenu}>
@@ -110,35 +171,7 @@ const Navbar = () => {
             </MenuItem>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {buttons}
         </Toolbar>
       </Container>
     </AppBar>

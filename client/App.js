@@ -11,7 +11,8 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
-    user: {}
+    user: {},
+    loading: false
   };
   componentDidMount() {
     const config = {
@@ -23,7 +24,8 @@ class App extends Component {
       .get('http://localhost:3000/bookbee/users/user', config)
       .then((res) => {
         this.setState({
-          user: res.data
+          user: res.data,
+          loading: true
         });
       })
       .catch((err) => {
@@ -36,7 +38,7 @@ class App extends Component {
       <div>
         <Router>
           <header>
-            <Navbar />
+            <Navbar user={this.state} />
           </header>
           <Switch>
             <Route path="/details/:id">
@@ -49,7 +51,7 @@ class App extends Component {
             <Route path="/register">
               <Register />
             </Route>
-            <Route exact path="/home" component={() => <Home user={this.state.user} />} />
+            <Route exact path="/home" component={() => <Home user={this.state} />} />
             <Route path="/">
               <SearchParams />
             </Route>
