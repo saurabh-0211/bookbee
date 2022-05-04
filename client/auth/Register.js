@@ -48,8 +48,8 @@ export class Register extends Component {
         localStorage.setItem('token', res.data.token);
         console.log(res.data);
         this.setState({ errors: { msg: null } });
+        this.props.handleLogin(true);
         //after successfull registration next page success will be called
-        this.nextStep();
       })
       .catch((err) => {
         this.setState({ errors: { msg: err.response.data } });

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   AppBar,
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, handleLogin }) => {
   const classes = useStyles();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -56,6 +57,12 @@ const Navbar = ({ user }) => {
     setAnchorElUser(null);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem('token');
+    handleLogin(false);
+  };
+
+  console.log(user);
   let buttons;
   if (localStorage.getItem('token')) {
     buttons = (
@@ -86,7 +93,7 @@ const Navbar = ({ user }) => {
               Profile
             </Link>
           </MenuItem>
-          <MenuItem key="logout" onClick={() => localStorage.removeItem('token')}>
+          <MenuItem key="logout" onClick={logoutHandler}>
             <Link to="/" className={classes.login}>
               Logout
             </Link>

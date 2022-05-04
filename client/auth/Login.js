@@ -44,7 +44,8 @@ class Login extends Component {
         localStorage.setItem('token', res.data.token);
         console.log(res.data);
         isAuthenticated = true;
-        this.setState({ password: '', msg: null });
+        this.setState({ msg: null });
+        this.props.handleLogin(true);
       })
       .catch((err) => {
         this.setState({ msg: err.response.data });
