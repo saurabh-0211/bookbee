@@ -82,7 +82,7 @@ const Navbar = ({ user }) => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem key="profile" onClick={handleCloseUserMenu}>
+          <MenuItem key="profile">
             <Link to="/profile" className={classes.login}>
               Profile
             </Link>
