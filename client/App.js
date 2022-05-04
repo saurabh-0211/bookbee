@@ -98,7 +98,7 @@ class App extends Component {
             <Route path="/register">
               <Register handleLogin={this.handleLogin}/>
             </Route>
-            <Route exact path="/home" component={() => <Home user={this.state} />} />
+            <Route exact path="/home" component={() => <Home user={this.state.user} />} />
             <Route path="/">
               <SearchParams user={this.state}/>
             </Route>

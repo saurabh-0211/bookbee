@@ -64,7 +64,7 @@ const Navbar = ({ user, handleLogin }) => {
 
   console.log(user);
   let buttons;
-  if (user.loading === true) {
+  if (localStorage.getItem('token')) {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
@@ -88,7 +88,7 @@ const Navbar = ({ user, handleLogin }) => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem key="profile" onClick={handleCloseUserMenu}>
+          <MenuItem key="profile">
             <Link to="/profile" className={classes.login}>
               Profile
             </Link>
@@ -104,7 +104,7 @@ const Navbar = ({ user, handleLogin }) => {
   } else {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
-        <MenuItem key="login" onClick={handleCloseNavMenu}>
+        <MenuItem key="login">
           <Link to="/login" className={classes.link}>
             Login
           </Link>

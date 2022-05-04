@@ -42,7 +42,7 @@ class Login extends Component {
       .post('http://localhost:3000/bookbee/users/login', body, config)
       .then((res) => {
         localStorage.setItem('token', res.data.token);
-        // console.log(res.data);
+        console.log(res.data);
         isAuthenticated = true;
         this.setState({ msg: null });
         this.props.handleLogin(true);
