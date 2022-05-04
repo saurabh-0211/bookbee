@@ -155,7 +155,7 @@ const Navbar = ({ user, handleLogin }) => {
               }}
             >
               <MenuItem key="home" onClick={handleCloseNavMenu}>
-                <Link to="/" className={classes.link}>
+                <Link to="/" className={classes.login}>
                   Home
                 </Link>
               </MenuItem>
