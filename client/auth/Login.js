@@ -101,11 +101,12 @@ class Login extends Component {
     this.setState({
       errors: errors
     });
+    this.setState({ msg: null });
     return formIsValid;
   }
 
   render() {
-    if (isAuthenticated) {
+    if (localStorage.getItem('token')) {
       return <Redirect to={{ pathname: '/home' }} />;
     }
     return (
