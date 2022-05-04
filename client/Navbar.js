@@ -56,9 +56,8 @@ const Navbar = ({ user }) => {
     setAnchorElUser(null);
   };
 
-  console.log(user);
   let buttons;
-  if (user.loading === true) {
+  if (localStorage.getItem('token')) {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
@@ -87,7 +86,7 @@ const Navbar = ({ user }) => {
               Profile
             </Link>
           </MenuItem>
-          <MenuItem key="logout" onClick={() => localStorage.clear()}>
+          <MenuItem key="logout" onClick={() => localStorage.removeItem('token')}>
             <Link to="/" className={classes.login}>
               Logout
             </Link>
@@ -98,7 +97,7 @@ const Navbar = ({ user }) => {
   } else {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
-        <MenuItem key="login" onClick={handleCloseNavMenu}>
+        <MenuItem key="login">
           <Link to="/login" className={classes.link}>
             Login
           </Link>

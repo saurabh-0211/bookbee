@@ -24,8 +24,7 @@ class App extends Component {
       .get('http://localhost:3000/bookbee/users/user', config)
       .then((res) => {
         this.setState({
-          user: res.data,
-          loading: true
+          user: res.data
         });
       })
       .catch((err) => {
@@ -38,7 +37,7 @@ class App extends Component {
       <div>
         <Router>
           <header>
-            <Navbar user={this.state} />
+            <Navbar user={this.state.user} />
           </header>
           <Switch>
             <Route path="/details/:id">
@@ -51,7 +50,7 @@ class App extends Component {
             <Route path="/register">
               <Register />
             </Route>
-            <Route exact path="/home" component={() => <Home user={this.state} />} />
+            <Route exact path="/home" component={() => <Home user={this.state.user} />} />
             <Route path="/">
               <SearchParams />
             </Route>
