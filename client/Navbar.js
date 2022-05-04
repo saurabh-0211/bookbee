@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: 'white',
     fontSize: '20px'
+  },
+  login: {
+    textDecoration: 'none',
+    color: '#333',
+    fontSize: '20px'
   }
 }));
 
@@ -78,12 +83,12 @@ const Navbar = ({ user }) => {
           onClose={handleCloseUserMenu}
         >
           <MenuItem key="profile" onClick={handleCloseUserMenu}>
-            <Link to="/profile" className={classes.link}>
+            <Link to="/profile" className={classes.login}>
               Profile
             </Link>
           </MenuItem>
           <MenuItem key="logout" onClick={() => localStorage.clear()}>
-            <Link to="/" className={classes.link}>
+            <Link to="/" className={classes.login}>
               Logout
             </Link>
           </MenuItem>

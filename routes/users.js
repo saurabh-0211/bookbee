@@ -56,7 +56,7 @@ router.get(`/`, async (req, res) => {
 router.get('/user', checkAuth, async (req, res) => {
   const user = req.user;
   return res.send(user);
-})
+});
 
 // getting a specific user data from the database
 // router.get(`/:id`, async (req, res) => {
@@ -67,7 +67,6 @@ router.get('/user', checkAuth, async (req, res) => {
 //   }
 //   res.send(user);
 // });
-
 
 // updating the user data if he/she wants to
 router.put('/userUpdate', async (req, res) => {
