@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import ReactStars from 'react-rating-stars-component';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
 
 const Book = ({ id, bookName, image, authors, rating, numRatings }) => {
   let hero = 'http://pets-images.dev-apis.com/pets/none.jpg';
@@ -20,18 +21,10 @@ const Book = ({ id, bookName, image, authors, rating, numRatings }) => {
       <div className="info">
         <h1>{bookName}</h1>
         <h2 className="authors">{authors}</h2>
-        <ReactStars
-          count={5}
-          size={30}
-          value={rating}
-          isHalf={true}
-          edit={false}
-          emptyIcon={<i className="far fa-star"></i>}
-          halfIcon={<i className="fa fa-star-half-alt"></i>}
-          fullIcon={<i className="fa fa-star"></i>}
-          activeColor="#ffd700"
-        />
-        <span className="ratings">No. of Ratings: {sum}</span>
+        <div>
+          <Typography component="legend"> No.of Ratings: {sum}</Typography>
+          <Rating name="read-only" size="large" value={rating} readOnly />
+        </div>
       </div>
     </Link>
   );
