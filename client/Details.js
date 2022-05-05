@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import LinearProgress from '@mui/material/LinearProgress';
 import UserReview from './components/UserReview';
-import EditReview from './components/EditReview';
 class Details extends Component {
   state = { loading: true, value: 0 };
 
@@ -42,13 +41,6 @@ class Details extends Component {
       sum += numRatings[key];
     }
     let userReview = reviews.find((r) => r.user.toString() === this.props.user._id.toString());
-    let buttons;
-
-    if (userReview) {
-      buttons = <EditReview user={this.props.user} id={this.state._id} userReview={userReview} />;
-    } else {
-      buttons = <UserReview user={this.props.user} id={this.state._id} />;
-    }
 
     return (
       <div className="main">
@@ -144,7 +136,7 @@ class Details extends Component {
               </div>
             </div>
           </div>
-          {buttons}
+          <UserReview user={this.props.user} id={this.state._id} userReview={userReview} />
         </div>
       </div>
     );
