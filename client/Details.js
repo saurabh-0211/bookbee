@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 class Details extends Component {
   state = { loading: true, value: 0 };
 
@@ -23,6 +25,10 @@ class Details extends Component {
     }
     const { stream, subject, bookName, publisher, authors, image, rating, numRatings, numReviews } =
       this.state;
+    let sum = 0;
+    for (let key in numRatings) {
+      sum += numRatings[key];
+    }
     return (
       <div className="details">
         <div className="book-img">
@@ -54,6 +60,62 @@ class Details extends Component {
               <div className="item">
                 <span>Publisher</span>
                 <h3>{publisher}</h3>
+              </div>
+            </div>
+          </div>
+          <div className="list">
+            <span>Ratings</span>
+            <div className="book-ratings">
+              <div className="total-ratings">
+                <h1>{rating.toFixed(1)} ★</h1>
+                <h3>{sum} Ratings</h3>
+              </div>
+              <div className="star-ratings">
+                <div className="star">
+                  <span>5 ★</span>
+                  <LinearProgress
+                    className="progress"
+                    variant="determinate"
+                    value={(numRatings.five / sum) * 100}
+                  />
+                  <span>{numRatings.five}</span>
+                </div>
+                <div className="star">
+                  <span>4 ★</span>
+                  <LinearProgress
+                    className="progress"
+                    variant="determinate"
+                    value={(numRatings.four / sum) * 100}
+                  />
+                  <span>{numRatings.four}</span>
+                </div>
+                <div className="star">
+                  <span>3 ★</span>
+                  <LinearProgress
+                    className="progress"
+                    variant="determinate"
+                    value={(numRatings.three / sum) * 100}
+                  />
+                  <span>{numRatings.three}</span>
+                </div>
+                <div className="star">
+                  <span>2 ★</span>
+                  <LinearProgress
+                    className="progress"
+                    variant="determinate"
+                    value={(numRatings.two / sum) * 100}
+                  />
+                  <span>{numRatings.two}</span>
+                </div>
+                <div className="star">
+                  <span>1 ★</span>
+                  <LinearProgress
+                    className="progress"
+                    variant="determinate"
+                    value={(numRatings.one / sum) * 100}
+                  />
+                  <span>{numRatings.one}</span>
+                </div>
               </div>
             </div>
           </div>

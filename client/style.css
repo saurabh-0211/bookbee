@@ -119,6 +119,30 @@ body {
   color: #555;
 }
 
+.book-ratings {
+  display: flex;
+  gap: 1.5rem 1rem;
+}
+
+.star-ratings {
+  width: 100%;
+}
+
+.star-ratings > div {
+  display: flex;
+  flex-direction: row;
+}
+.progress {
+  height: 6px !important;
+  min-width: 70%;
+  border-radius: 5px;
+  margin-top: 8px;
+  margin-left: 10px;
+}
+.star > span:last-child {
+  font-size: 14px;
+  margin: 2px;
+}
 .info {
   float: left;
   width: 80%;
