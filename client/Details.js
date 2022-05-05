@@ -76,7 +76,7 @@ class Details extends Component {
                   <LinearProgress
                     className="progress"
                     variant="determinate"
-                    value={(numRatings.five / sum) * 100}
+                    value={sum ? (numRatings.five / sum) * 100 : 0}
                   />
                   <span>{numRatings.five}</span>
                 </div>
@@ -85,7 +85,7 @@ class Details extends Component {
                   <LinearProgress
                     className="progress"
                     variant="determinate"
-                    value={(numRatings.four / sum) * 100}
+                    value={sum ? (numRatings.four / sum) * 100 : 0}
                   />
                   <span>{numRatings.four}</span>
                 </div>
@@ -94,7 +94,7 @@ class Details extends Component {
                   <LinearProgress
                     className="progress"
                     variant="determinate"
-                    value={(numRatings.three / sum) * 100}
+                    value={sum ? (numRatings.three / sum) * 100 : 0}
                   />
                   <span>{numRatings.three}</span>
                 </div>
@@ -103,7 +103,7 @@ class Details extends Component {
                   <LinearProgress
                     className="progress"
                     variant="determinate"
-                    value={(numRatings.two / sum) * 100}
+                    value={sum ? (numRatings.two / sum) * 100 : 0}
                   />
                   <span>{numRatings.two}</span>
                 </div>
@@ -112,7 +112,7 @@ class Details extends Component {
                   <LinearProgress
                     className="progress"
                     variant="determinate"
-                    value={(numRatings.one / sum) * 100}
+                    value={sum ? (numRatings.one / sum) * 100 : 0}
                   />
                   <span>{numRatings.one}</span>
                 </div>
