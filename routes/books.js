@@ -4,6 +4,19 @@ const router = express.Router();
 const checkAuth = require('../middleware/checkAuth');
 // const checkAdmin = require('../middleware/checkAdmin');
 const multer = require('multer');
+
+const Procyon = require('procyon');
+
+const procyon = new Procyon({
+      nearestNeighbors: 5,
+      className: 'books',
+      numOfRecsStore: 30,
+      redisUrl: process.env.REDIS_URL || '127.0.0.1',
+      redisPort: process.env.REDIS_PORT || 6379,
+      redisAuth: process.env.REDIS_AUTH || ''
+  })
+
+
 // mime type to check uploaded image extension
 const FILE_TYPE_MAP = {
   'image/png': 'png',
@@ -273,8 +286,15 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
     //if alreadyReviewed removes the last review and updates reviews and rating and review
     if (alreadyReviewed) {
 
-      await book.reviews.pull({_id: alreadyReviewed._id.toString()});
+      await book.reviews.pull({_id: alreadyReviewed._id.toString()})
 
+      if(alreadyReviewed.rating < 3){
+        await procyon.undisliked(req.user.username, req.params.id );
+      }
+      else{
+        await procyon.unliked(req.user.username, req.params.id);
+      }
+      
       //removing this user's rating from numRatings count
       switch (alreadyReviewed.rating) {
         case 1:
@@ -312,7 +332,15 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
       book: book._id
     };
 
-    book.reviews.push(review);
+    // adding likes/dislikes in raccoon 
+    if(req.body.rating < 3){
+      await procyon.disliked(req.user.username, req.params.id);
+    }
+    else{
+      await procyon.liked(req.user.username, req.params.id);
+    }
+
+    await book.reviews.push(review);
 
     book.numReviews = book.reviews.length;
 
@@ -342,8 +370,9 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
         break;
     }
 
-    //assigning a score
+    //making array of ratings count from 1 star to 5 star
     const starArray = Object.values(book.numRatings).map((item) => item);
+    //assigning the score
     book.r_score = starsort(starArray);
 
     //updates rating by doing calculation on numRatings array
@@ -356,5 +385,24 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
     return res.status(404);
   }
 });
+
+//getting recommendation for a user
+//Recs means recommendations
+router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
+  procyon.recommendFor(req.user.username, 15).then((results) => {
+    // returns an ranked sorted array of itemIds which represent the top recommendations
+    // for that individual user based on knn.
+    // numberOfRecs is the number of recommendations you want to receive.
+    // asking for recommendations queries the 'recommendedZSet' sorted set for the user.
+    // the movies in this set were calculated in advance when the user last rated
+    // something.
+    // ex. results = ['batmanId', 'supermanId', 'chipmunksId']
+
+    return res.send(results);
+
+
+  });
+});
+
 
 module.exports = router;
