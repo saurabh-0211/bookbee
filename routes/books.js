@@ -266,15 +266,42 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
   const book = await Book.findById(req.params.id);
 
   if (book) {
-    const alreadyReviewed = book.reviews.find((r) => r.user.toString() === req.user._id.toString());
 
+    const alreadyReviewed = book.reviews.find((r) => r.user.toString() === req.user._id.toString());
+    //console.log(alreadyReviewed);
+
+    //if alreadyReviewed removes the last review and updates reviews and rating and review
     if (alreadyReviewed) {
-      res.status(400);
-      throw new Error('Book already reviewed');
+
+      await book.reviews.pull({_id: alreadyReviewed._id.toString()});
+
+      //removing this user's rating from numRatings count
+      switch (alreadyReviewed.rating) {
+        case 1:
+        case '1':
+          book.numRatings.one--;
+          break;
+        case 2:
+        case '2':
+          book.numRatings.two--;
+          break;
+        case 3:
+        case '3':
+          book.numRatings.three--;
+          break;
+        case 4:
+        case '4':
+          book.numRatings.four--;
+          break;
+        case 5:
+        case '5':
+          book.numRatings.five--;
+          break;
+      }
     }
 
-    if (req.body.rating < 1) {
-      throw new Error('Give a rating between 1 and 5');
+    if (req.body.rating < 1 && req.body.rating > 5) {
+      return res.status(400).send('rating must be between 1-5');
     }
 
     const review = {
@@ -289,7 +316,7 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 
     book.numReviews = book.reviews.length;
 
-    book.rating = book.reviews.reduce((acc, item) => item.rating + acc, 0) / book.reviews.length;
+    //book.rating = book.reviews.reduce((acc, item) => item.rating + acc, 0) / book.reviews.length;
 
     //update numratings
     switch (rating) {
@@ -319,11 +346,14 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
     const starArray = Object.values(book.numRatings).map((item) => item);
     book.r_score = starsort(starArray);
 
+    //updates rating by doing calculation on numRatings array
+    const weightedSum = starArray.reduce((sum, n, i) => sum + (n * (i+1)))
+    book.rating = await weightedSum/(starArray.reduce((a,b) => a + b));
+
     await book.save();
-    res.status(201).json({ message: 'Review added' });
+    return res.status(201).json({ message: 'Review added' });
   } else {
-    res.status(404);
-    throw new Error('Book not found');
+    return res.status(404);
   }
 });
 
