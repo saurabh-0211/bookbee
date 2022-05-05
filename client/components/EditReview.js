@@ -4,9 +4,10 @@ import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-const UserReview = ({ user, id }) => {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+const EditReview = ({ user, id, userReview }) => {
+  const [rating, setRating] = useState(parseInt(userReview.rating));
+  const [comment, setComment] = useState(userReview.comment);
+  console.log(userReview);
 
   const postReview = ({ rating, comment }) => {
     const config = {
@@ -59,9 +60,9 @@ const UserReview = ({ user, id }) => {
         multiline
       />
       <Button type="submit" onClick={onSubmit} variant="contained" color="primary">
-        Submit a Review
+        Edit Review
       </Button>
     </div>
   );
 };
-export default UserReview;
+export default EditReview;
