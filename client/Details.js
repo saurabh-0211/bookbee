@@ -30,21 +30,33 @@ class Details extends Component {
         </div>
         <div className="book-details">
           <div className="book-rating">
-            <Rating name="read-only" size="small" value={rating} readOnly />
+            <Rating name="read-only" size="small" value={rating} precision={0.5} readOnly />
             <span>
               {rating} Ratings & {numReviews} Reviews
             </span>
           </div>
-          <p>{`${subject} -${bookName}`}</p>
-          <h2>{`${stream} - ${authors} - ${publisher}`}</h2>
-          <Rating
-            name="simple-controlled"
-            value={this.state.value}
-            size="large"
-            onChange={(event, newValue) => {
-              this.setState({ value: newValue });
-            }}
-          />
+          <h1>{bookName}</h1>
+          <div className="list">
+            <span>Details</span>
+            <div className="book-info">
+              <div className="item">
+                <span>Stream</span>
+                <h3 style={{ textTransform: 'capitalize' }}>{stream}</h3>
+              </div>
+              <div className="item">
+                <span>Subject</span>
+                <h3>{subject}</h3>
+              </div>
+              <div className="item">
+                <span>Author</span>
+                <h3>{authors}</h3>
+              </div>
+              <div className="item">
+                <span>Publisher</span>
+                <h3>{publisher}</h3>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
