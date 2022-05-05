@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import LinearProgress from '@mui/material/LinearProgress';
-import Review from './Review';
+import UserReview from './UserReview';
 class Details extends Component {
   state = { loading: true, value: 0 };
 
@@ -23,12 +23,23 @@ class Details extends Component {
     if (this.state.loading) {
       return <h2>loading....</h2>;
     }
-    const { stream, subject, bookName, publisher, authors, image, rating, numRatings, numReviews } =
-      this.state;
+    const {
+      _id,
+      stream,
+      subject,
+      bookName,
+      publisher,
+      authors,
+      image,
+      rating,
+      numRatings,
+      numReviews
+    } = this.state;
     let sum = 0;
     for (let key in numRatings) {
       sum += numRatings[key];
     }
+
     return (
       <div className="main">
         <div className="details">
@@ -37,13 +48,7 @@ class Details extends Component {
           </div>
           <div className="book-details">
             <div className="book-rating">
-              <Rating
-                name="read-only"
-                size="small"
-                value={rating.toFixed(1)}
-                precision={0.5}
-                readOnly
-              />
+              <Rating name="read-only" size="small" value={rating} precision={0.5} readOnly />
               <span>
                 {rating.toFixed(1)} Ratings & {numReviews} Reviews
               </span>
@@ -129,7 +134,7 @@ class Details extends Component {
               </div>
             </div>
           </div>
-          <Review />
+          <UserReview user={this.props.user} id={this.state._id} />
         </div>
       </div>
     );

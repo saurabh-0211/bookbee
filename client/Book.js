@@ -23,13 +23,7 @@ const Book = ({ id, bookName, image, authors, rating, numRatings }) => {
         <h2 className="authors">{authors}</h2>
         <div>
           <Typography component="legend"> No.of Ratings: {sum}</Typography>
-          <Rating
-            name="read-only"
-            size="large"
-            value={rating.toFixed(1)}
-            precision={0.5}
-            readOnly
-          />
+          <Rating name="read-only" size="large" value={rating} precision={0.5} readOnly />
         </div>
       </div>
     </Link>

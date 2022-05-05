@@ -6,7 +6,7 @@ const localCache = [];
 export default function useSubjectList(semester) {
   const [subjectList, setSubjectList] = useState([]);
   const [status, setStatus] = useState('unloaded');
-  let setOfSubjects = new Set();
+  // let setOfSubjects = new Set();
 
   useEffect(() => {
     if (!semester) {

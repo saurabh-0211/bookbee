@@ -50,7 +50,6 @@ class App extends Component {
         axios
           .get('http://localhost:3000/bookbee/users/user', config)
           .then((res) => {
-            console.log('hello');
             this.setState({
               loggedIn: true,
               user: res.data,
@@ -79,14 +78,15 @@ class App extends Component {
       <div>
         <Router>
           <header>
-            <Navbar user={this.state} handleLogin={this.handleLogin} />
+            <Navbar user={this.state.user} handleLogin={this.handleLogin} />
+            {/* handleLogin is passed cuz Logout is done here */}
           </header>
           <Switch>
             <Route path="/details/:id">
-              <Details />
+              <Details user={this.state.user} />
             </Route>
             <Route path="/login">
-              <Login user={this.state} handleLogin={this.handleLogin} />
+              <Login user={this.state.user} handleLogin={this.handleLogin} />
             </Route>
             <Route path="/navbar"></Route>
             <Route path="/register">

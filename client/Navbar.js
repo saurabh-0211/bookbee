@@ -62,9 +62,8 @@ const Navbar = ({ user, handleLogin }) => {
     handleLogin(false);
   };
 
-  console.log(user);
   let buttons;
-  if (localStorage.getItem('token')) {
+  if (user) {
     buttons = (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">

@@ -266,14 +266,12 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
   const book = await Book.findById(req.params.id);
 
   if (book) {
-
     const alreadyReviewed = book.reviews.find((r) => r.user.toString() === req.user._id.toString());
     //console.log(alreadyReviewed);
 
     //if alreadyReviewed removes the last review and updates reviews and rating and review
     if (alreadyReviewed) {
-
-      await book.reviews.pull({_id: alreadyReviewed._id.toString()});
+      await book.reviews.pull({ _id: alreadyReviewed._id.toString() });
 
       //removing this user's rating from numRatings count
       switch (alreadyReviewed.rating) {
@@ -347,8 +345,8 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
     book.r_score = starsort(starArray);
 
     //updates rating by doing calculation on numRatings array
-    const weightedSum = starArray.reduce((sum, n, i) => sum + (n * (i+1)))
-    book.rating = await weightedSum/(starArray.reduce((a,b) => a + b));
+    const weightedSum = starArray.reduce((sum, n, i) => sum + n * (i + 1));
+    book.rating = (await weightedSum) / starArray.reduce((a, b) => a + b);
 
     await book.save();
     return res.status(201).json({ message: 'Review added' });
