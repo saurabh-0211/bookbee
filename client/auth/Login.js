@@ -107,7 +107,7 @@ class Login extends Component {
   }
 
   render() {
-    if (localStorage.getItem('token')) {
+    if (this.props.user) {
       return <Redirect to={{ pathname: '/home' }} />;
     }
     return (
