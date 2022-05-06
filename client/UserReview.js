@@ -12,8 +12,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 const UserReview = ({ user, id, userReview }) => {
   const [rating, setRating] = useState(userReview ? parseInt(userReview.rating) : 0);
   const [comment, setComment] = useState(userReview ? userReview.comment : '');
+  const [open, setOpen] = useState(false);
 
   let button = userReview ? 'Edit Review' : 'Submit a Review';
+  let modal = user ? 'Your Review is Successfully Submitted' : 'You are not logged in';
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const postReview = ({ rating, comment }) => {
     const config = {
@@ -31,6 +41,7 @@ const UserReview = ({ user, id, userReview }) => {
       .post(`http://localhost:3000/bookbee/books/${id}/reviews`, body, config)
       .then((res) => {
         console.log(res.data);
+        handleClickOpen();
       })
       .catch((err) => {
         console.log(err);
@@ -43,7 +54,7 @@ const UserReview = ({ user, id, userReview }) => {
       if (user) {
         postReview({ rating, comment });
       } else {
-        console.log('You are not logged in');
+        handleClickOpen();
       }
     }
   };
@@ -71,6 +82,21 @@ const UserReview = ({ user, id, userReview }) => {
       <Button type="submit" onClick={onSubmit} variant="contained" color="primary">
         {button}
       </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{modal}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
