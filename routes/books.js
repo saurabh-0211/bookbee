@@ -390,34 +390,40 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 //Recs means recommendations
 router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
 
-  procyon.recommendFor(req.user.username, 15).then(async (results) => {
-    // returns an ranked sorted array of itemIds which represent the top recommendations
-    // for that individual user based on knn.
-    // numberOfRecs is the number of recommendations you want to receive.
-    // asking for recommendations queries the 'recommendedZSet' sorted set for the user.
-    // the movies in this set were calculated in advance when the user last rated
-    // something.
-    // ex. results = ['batmanId', 'supermanId', 'chipmunksId']
+  // await procyon.liked('eshaan159', '623c955048bc063cbd14d6bb');
+  // await procyon.liked('eshaan159', '623c94fa48bc063cbd14d6b9');
+  // await procyon.liked('eshaan159', '623c94a048bc063cbd14d6b7');
+  
+ const results = await procyon.recommendFor(req.user.username, 15);
+//  .then(async (results) => {
+//     // returns an ranked sorted array of itemIds which represent the top recommendations
+//     // for that individual user based on knn.
+//     // numberOfRecs is the number of recommendations you want to receive.
+//     // asking for recommendations queries the 'recommendedZSet' sorted set for the user.
+//     // the movies in this set were calculated in advance when the user last rated
+//     // something.
+//     // ex. results = ['batmanId', 'supermanId', 'chipmunksId']
 
-    //const ids = ['623c965f48bc063cbd14d6c1', '623c955048bc063cbd14d6bb','623c9139a47e389a934ee4fc', '623864f594ed04b1179d7787', '623868ac94ed04b1179d778a'];
+//     //const ids = ['623c965f48bc063cbd14d6c1', '623c955048bc063cbd14d6bb','623c9139a47e389a934ee4fc', '623864f594ed04b1179d7787', '623868ac94ed04b1179d778a'];
+// });
 
-    //converting id of type strings into type mongoose ObjectId 
-    let idsObject = ids.map(id => mongoose.Types.ObjectId(id));
-    //idsObject is array of ID of type ObjectId
-    // query taken from https://stackoverflow.com/a/42293303/16567865
-    var query = [
-      {$match: { _id: {$in: idsObject}}},
-      {$addFields: {"__order": {$indexOfArray: [idsObject, "$_id" ]}}},
-      {$sort: {"__order": 1}}
-     ];
+ //converting id of type strings into type mongoose ObjectId 
+ console.log(results)
+ let idsObject = results.map(id => mongoose.Types.ObjectId(id));
+ //idsObject is array of ID of type ObjectId
+ // query taken from https://stackoverflow.com/a/42293303/16567865
+ var query = [
+   {$match: { _id: {$in: idsObject}}},
+   {$addFields: {"__order": {$indexOfArray: [idsObject, "$_id" ]}}},
+   {$sort: {"__order": 1}}
+  ];
 
-     const books = await Book.aggregate(query)
-     //console.log(await Book.aggregate(query))
+  const books = await Book.aggregate(query)
+  //console.log(await Book.aggregate(query))
 
-    //console.log(books)
-    return res.send(books);
+ //console.log(books)
+ return res.send(books);
 
-  });
 });
 
 // takes user id as a input and return array of users similar to that user
