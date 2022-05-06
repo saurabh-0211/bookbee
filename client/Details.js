@@ -41,7 +41,11 @@ class Details extends Component {
     for (let key in numRatings) {
       sum += numRatings[key];
     }
-    let userReview = reviews.find((r) => r.user.toString() === this.props.user._id.toString());
+    let userReview = [''];
+    if (this.props.user) {
+      userReview = reviews.find((r) => r.user.toString() === this.props.user._id.toString());
+    }
+
     return (
       <div className="main">
         <div className="details">
@@ -139,7 +143,7 @@ class Details extends Component {
         </div>
         <div className="review-ratings">
           <UserReview user={this.props.user} id={this.state._id} userReview={userReview} />
-          <Comment reviews={reviews} userReview={userReview} />
+          <Comment reviews={reviews} />
         </div>
       </div>
     );
