@@ -2,6 +2,7 @@ import { Component, StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Login from './auth/Login';
+import UserProfile from './UserProfile';
 import Register from './auth/Register';
 import SearchParams from './SearchParams';
 import Details from './Details';
@@ -85,6 +86,9 @@ class App extends Component {
             <Route path="/details/:id">
               <Details user={this.state.user} />
             </Route>
+            <Route path="/profile">
+              <UserProfile user={this.state.user} />
+            </Route>
             <Route path="/login">
               <Login user={this.state.user} handleLogin={this.handleLogin} />
             </Route>
@@ -93,7 +97,6 @@ class App extends Component {
               <Register user={this.state.user} handleLogin={this.handleLogin} />
             </Route>
             <Route exact path="/recommend" component={() => <Recommend user={this.state.user} />} />
-            {/* <Route path="/home" render={(props) => <Home {...props} />} /> */}
             <Route path="/">
               <SearchParams user={this.state.user} />
             </Route>

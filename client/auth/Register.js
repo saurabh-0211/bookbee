@@ -1,9 +1,5 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router';
-import UserDetails from '../components/UserDetails';
-import PersonalDetails from '../components/PersonalDetails';
-import Confirm from '../components/Confirm';
-import Success from '../components/Success';
 import axios from 'axios';
 
 export class Register extends Component {
