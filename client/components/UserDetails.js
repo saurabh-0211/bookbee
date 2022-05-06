@@ -9,10 +9,7 @@ import {
   IconButton
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-
-const theme = createTheme();
 
 class UserDetails extends Component {
   state = {
@@ -105,67 +102,59 @@ class UserDetails extends Component {
   render() {
     const { values, handleChange } = this.props;
     return (
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <TextField
-            placeholder="Email Address"
-            label="Email Address"
-            onChange={handleChange('email')}
-            defaultValue={values.email}
-            // variant="outlined"
-            autoComplete="email"
-            fullWidth
-          />
-          <br />
-          <br />
-          <div className="errorMsg">{this.state.errors.email}</div>
+      <Container className="reviews" component="main" maxWidth="xs">
+        <TextField
+          placeholder="Email Address"
+          label="Email Address"
+          onChange={handleChange('email')}
+          defaultValue={values.email}
+          // variant="outlined"
+          autoComplete="email"
+          fullWidth
+        />
+        <br />
+        <br />
+        <div className="errorMsg">{this.state.errors.email}</div>
 
-          <TextField
-            label="Username"
-            onChange={handleChange('username')}
-            defaultValue={values.username}
-            // variant="outlined"
-            autoComplete="username"
-            fullWidth
-          />
-          <br />
-          <br />
-          <div className="errorMsg">{this.state.errors.username}</div>
-          <TextField
-            label="Password"
-            type={this.state.showPassword ? 'text' : 'password'}
-            onChange={handleChange('password')}
-            defaultValue={this.state.password}
-            autoComplete="password"
-            fullWidth
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={this.handleClickShowPassword}
-                    onMouseDown={this.handleMouseDownPassword}
-                  >
-                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <br />
-          <br />
-          <div className="errorMsg">{this.state.errors.password}</div>
-          <Button
-            onClick={this.continue}
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
-            Next
-          </Button>
-        </Container>
-      </ThemeProvider>
+        <TextField
+          label="Username"
+          onChange={handleChange('username')}
+          defaultValue={values.username}
+          // variant="outlined"
+          autoComplete="username"
+          fullWidth
+        />
+        <br />
+        <br />
+        <div className="errorMsg">{this.state.errors.username}</div>
+        <TextField
+          label="Password"
+          type={this.state.showPassword ? 'text' : 'password'}
+          onChange={handleChange('password')}
+          defaultValue={this.state.password}
+          autoComplete="password"
+          fullWidth
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={this.handleClickShowPassword}
+                  onMouseDown={this.handleMouseDownPassword}
+                >
+                  {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+        <br />
+        <br />
+        <div className="errorMsg">{this.state.errors.password}</div>
+        <Button onClick={this.continue} type="submit" variant="contained" color="primary" fullWidth>
+          Next
+        </Button>
+      </Container>
     );
   }
 }

@@ -111,7 +111,7 @@ class Login extends Component {
       return <Redirect to={{ pathname: '/home' }} />;
     }
     return (
-      <Container component="main" maxWidth="xs">
+      <Container className="reviews" component="main" maxWidth="xs">
         <TextField
           label="Email Address"
           onChange={this.handleChange('email')}
