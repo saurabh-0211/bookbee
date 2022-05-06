@@ -5,7 +5,8 @@ const checkAuth = require('../middleware/checkAuth');
 // const checkAdmin = require('../middleware/checkAdmin');
 const multer = require('multer');
 
-const Procyon = require('procyon');
+const mongoose = require('mongoose');
+const Procyon = require('procyon'); //thanks to https://github.com/jochemstoel/Procyon
 
 const procyon = new Procyon({
       nearestNeighbors: 5,
@@ -389,7 +390,8 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 //getting recommendation for a user
 //Recs means recommendations
 router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
-  procyon.recommendFor(req.user.username, 15).then((results) => {
+
+  procyon.recommendFor(req.user.username, 15).then(async (results) => {
     // returns an ranked sorted array of itemIds which represent the top recommendations
     // for that individual user based on knn.
     // numberOfRecs is the number of recommendations you want to receive.
@@ -398,9 +400,31 @@ router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
     // something.
     // ex. results = ['batmanId', 'supermanId', 'chipmunksId']
 
-    return res.send(results);
+    //const ids = ['623c965f48bc063cbd14d6c1', '623c955048bc063cbd14d6bb','623c9139a47e389a934ee4fc', '623864f594ed04b1179d7787', '623868ac94ed04b1179d778a'];
 
+    //converting id of type strings into type mongoose ObjectId 
+    let idsObject = ids.map(id => mongoose.Types.ObjectId(id));
+    //idsObject is array of ID of type ObjectId
+    // query taken from https://stackoverflow.com/a/42293303/16567865
+    var query = [
+      {$match: { _id: {$in: idsObject}}},
+      {$addFields: {"__order": {$indexOfArray: [idsObject, "$_id" ]}}},
+      {$sort: {"__order": 1}}
+     ];
 
+     const books = await Book.aggregate(query)
+     //console.log(await Book.aggregate(query))
+
+    //console.log(books)
+    return res.send(books);
+
+  });
+});
+
+// takes user id as a input and return array of users similar to that user
+router.get(`/:id/similar`, checkAuth, async (req, res) => {
+  procyon.mostSimilarUsers(req.user.username).then((result)=>{
+    return res.send(result);
   });
 });
 
