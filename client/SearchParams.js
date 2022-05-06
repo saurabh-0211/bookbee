@@ -6,12 +6,13 @@ import useSubjectList from './useSubjectList';
 const SEMESTER = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
 const SearchParams = ({ user }) => {
-  const [search, setSearch] = useState('');
-  const [semester, setSemester] = useState('');
-  const [subject, setSubject] = useState('');
+  const [search, setSearch] = useStickyState('', 'search');
+  const [semester, setSemester] = useStickyState('', 'semester');
+  const [subject, setSubject] = useStickyState('', 'subject');
   const [books, setBooks] = useState([]);
   const [subjects] = useSubjectList(semester);
   const [page, setPage] = useState(1);
+
   const requestBooks = () => {
     axios
       .get(
@@ -34,6 +35,17 @@ const SearchParams = ({ user }) => {
   };
 
   useEffect(() => requestBooks(), [page]);
+
+  function useStickyState(defaultValue, key) {
+    const [value, setValue] = useState(() => {
+      const stickyValue = window.localStorage.getItem(key);
+      return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue;
+    });
+    useEffect(() => {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    }, [key, value]);
+    return [value, setValue];
+  }
 
   const pageIncr = () => {
     setPage(page + 1);

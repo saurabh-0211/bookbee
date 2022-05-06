@@ -20,19 +20,6 @@ export default function useSubjectList(semester) {
       setSubjectList([]);
       setStatus('loading');
 
-      // axios
-      //   .get(`http://localhost:3000/bookbee/books?semester=${semester}`)
-      //   .then((response) => {
-      //     const json = response.data;
-      //     json
-      //       .map((data) => data.subject)
-      //       .forEach((item) => setOfSubjects.add(item));
-
-      //     localCache[semester] = [...setOfSubjects].map((data) => data) || [];
-      //     setSubjectList(localCache[semester]);
-      //     setStatus('loaded');
-      //   });
-
       axios
         .get(`http://localhost:3000/bookbee/books/getSubjectNames/?semester=${semester}`)
         .then((response) => {
