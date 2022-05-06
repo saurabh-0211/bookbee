@@ -9,14 +9,13 @@ const mongoose = require('mongoose');
 const Procyon = require('procyon'); //thanks to https://github.com/jochemstoel/Procyon
 
 const procyon = new Procyon({
-      nearestNeighbors: 5,
-      className: 'books',
-      numOfRecsStore: 30,
-      redisUrl: process.env.REDIS_URL || '127.0.0.1',
-      redisPort: process.env.REDIS_PORT || 6379,
-      redisAuth: process.env.REDIS_AUTH || ''
-  })
-
+  nearestNeighbors: 5,
+  className: 'books',
+  numOfRecsStore: 30,
+  redisUrl: process.env.REDIS_URL || '127.0.0.1',
+  redisPort: process.env.REDIS_PORT || 6379,
+  redisAuth: process.env.REDIS_AUTH || ''
+});
 
 // mime type to check uploaded image extension
 const FILE_TYPE_MAP = {
@@ -285,16 +284,14 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 
     //if alreadyReviewed removes the last review and updates reviews and rating and review
     if (alreadyReviewed) {
+      await book.reviews.pull({ _id: alreadyReviewed._id.toString() });
 
-      await book.reviews.pull({_id: alreadyReviewed._id.toString()});
-
-      if(alreadyReviewed.rating < 3){
-        await procyon.undisliked(req.user.username, req.params.id );
-      }
-      else{
+      if (alreadyReviewed.rating < 3) {
+        await procyon.undisliked(req.user.username, req.params.id);
+      } else {
         await procyon.unliked(req.user.username, req.params.id);
       }
-      
+
       //removing this user's rating from numRatings count
       switch (alreadyReviewed.rating) {
         case 1:
@@ -332,11 +329,10 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
       book: book._id
     };
 
-    // adding likes/dislikes in raccoon 
-    if(req.body.rating < 3){
+    // adding likes/dislikes in raccoon
+    if (req.body.rating < 3) {
       await procyon.disliked(req.user.username, req.params.id);
-    }
-    else{
+    } else {
       await procyon.liked(req.user.username, req.params.id);
     }
 
@@ -428,10 +424,9 @@ router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
 
 // takes user id as a input and return array of users similar to that user
 router.get(`/:id/similar`, checkAuth, async (req, res) => {
-  procyon.mostSimilarUsers(req.user.username).then((result)=>{
+  procyon.mostSimilarUsers(req.user.username).then((result) => {
     return res.send(result);
   });
 });
-
 
 module.exports = router;

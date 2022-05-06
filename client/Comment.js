@@ -10,30 +10,36 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row'
   },
-  comment: {
-    width: '100%'
+  msg: {
+    alignItems: 'center',
+    margin: 'auto',
+    padding: '32px 56px'
   }
 }));
 
-const Comment = ({ reviews, userReview }) => {
-  console.log(reviews);
+const Comment = ({ reviews }) => {
   const classes = useStyles();
+  console.log(reviews.length);
   return (
     <Card sx={{ width: '50%' }}>
-      {reviews.map((review) => (
-        <CardContent key={review.user}>
-          <div className={classes.avatar}>
-            <Avatar alt={review.name} src="/static/images/avatar/2.jpg" />
-            <Typography sx={{ margin: '5px ' }} variant="h5" component="span">
-              {review.name}
+      {reviews.length ? (
+        reviews.map((review) => (
+          <CardContent key={review.user}>
+            <div className={classes.avatar}>
+              <Avatar alt={review.name} src="/static/images/avatar/2.jpg" />
+              <Typography sx={{ margin: '5px ' }} variant="h5" component="span">
+                {review.name}
+              </Typography>
+            </div>
+            <Rating name="simple-controlled" size="small" value={review.rating} readOnly />
+            <Typography variant="body2" color="text.secondary">
+              {review.comment}
             </Typography>
-          </div>
-          <Rating name="simple-controlled" size="small" value={review.rating} readOnly />
-          <Typography variant="body2" color="text.secondary">
-            {review.comment}
-          </Typography>
-        </CardContent>
-      ))}
+          </CardContent>
+        ))
+      ) : (
+        <h1 className={classes.msg}>No Reviews Yet.</h1>
+      )}
     </Card>
   );
 };

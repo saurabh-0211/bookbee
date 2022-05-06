@@ -108,10 +108,10 @@ class Login extends Component {
 
   render() {
     if (this.props.user) {
-      return <Redirect to={{ pathname: '/home' }} />;
+      return <Redirect to={{ pathname: '/' }} />;
     }
     return (
-      <Container component="main" maxWidth="xs">
+      <Container className="reviews" component="main" maxWidth="xs">
         <TextField
           label="Email Address"
           onChange={this.handleChange('email')}

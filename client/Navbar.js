@@ -68,7 +68,7 @@ const Navbar = ({ user, handleLogin }) => {
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <Avatar alt={user.name.toUpperCase()} src="/static/images/avatar/2.jpg" />
           </IconButton>
         </Tooltip>
         <Menu
@@ -158,6 +158,11 @@ const Navbar = ({ user, handleLogin }) => {
                   Home
                 </Link>
               </MenuItem>
+              <MenuItem key="recommend" onClick={handleCloseNavMenu}>
+                <Link to="/recommend" className={classes.login}>
+                  Recommend
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -172,6 +177,11 @@ const Navbar = ({ user, handleLogin }) => {
             <MenuItem key="home" onClick={handleCloseNavMenu}>
               <Link to="/" className={classes.link}>
                 Home
+              </Link>
+            </MenuItem>
+            <MenuItem key="recommend" onClick={handleCloseNavMenu}>
+              <Link to="/recommend" className={classes.link}>
+                Recommend
               </Link>
             </MenuItem>
           </Box>

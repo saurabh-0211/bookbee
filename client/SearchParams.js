@@ -12,7 +12,6 @@ const SearchParams = () => {
   const [books, setBooks] = useState([]);
   const [subjects] = useSubjectList(semester);
   const [page, setPage] = useState(1);
-
   const requestBooks = () => {
     axios
       .get(
@@ -21,7 +20,7 @@ const SearchParams = () => {
       .then((response) => {
         const myBooks = response.data;
         setBooks(myBooks);
-        console.log(myBooks);
+        // console.log(myBooks);
       });
   };
 

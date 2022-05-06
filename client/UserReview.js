@@ -3,6 +3,11 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const UserReview = ({ user, id, userReview }) => {
   const [rating, setRating] = useState(userReview ? parseInt(userReview.rating) : 0);
@@ -34,21 +39,24 @@ const UserReview = ({ user, id, userReview }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (user) {
-      postReview({ rating, comment });
-    } else {
-      console.log('You are not logged in');
+    if (rating) {
+      if (user) {
+        postReview({ rating, comment });
+      } else {
+        console.log('You are not logged in');
+      }
     }
   };
 
   return (
-    <div className="reviews">
+    <div style={{ filter: userReview ? 'grayscale(60%)' : 0 }} className="reviews">
       <Rating
         name="simple-controlled"
         size="large"
         value={parseInt(rating)}
         onChange={(e) => setRating(e.target.value)}
         className="user-ratings"
+        required
       />
       <TextField
         id="filled-multiline-static"
