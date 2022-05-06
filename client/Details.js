@@ -46,6 +46,8 @@ class Details extends Component {
       userReview = reviews.find((r) => r.user.toString() === this.props.user._id.toString());
     }
 
+    console.log(this.props.user);
+
     return (
       <div className="main">
         <div className="details">

@@ -4,7 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Avatar } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { margin } from '@mui/system';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {

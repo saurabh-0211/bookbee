@@ -6,7 +6,7 @@ import Register from './auth/Register';
 import SearchParams from './SearchParams';
 import Details from './Details';
 import Navbar from './Navbar';
-import Home from './Home';
+import Recommend from './Recommend';
 import axios from 'axios';
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
       axios
         .get('http://localhost:3000/bookbee/users/user', config)
         .then((res) => {
-          console.log('hello');
+          // console.log('hello');
           this.setState({
             loggedIn: true,
             user: res.data,
@@ -90,9 +90,9 @@ class App extends Component {
             </Route>
             <Route path="/navbar"></Route>
             <Route path="/register">
-              <Register handleLogin={this.handleLogin} />
+              <Register user={this.state.user} handleLogin={this.handleLogin} />
             </Route>
-            <Route exact path="/home" component={() => <Home user={this.state.user} />} />
+            <Route exact path="/recommend" component={() => <Recommend user={this.state.user} />} />
             {/* <Route path="/home" render={(props) => <Home {...props} />} /> */}
             <Route path="/">
               <SearchParams user={this.state} />

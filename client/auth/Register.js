@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Redirect } from 'react-router';
 import UserDetails from '../components/UserDetails';
 import PersonalDetails from '../components/PersonalDetails';
 import Confirm from '../components/Confirm';
@@ -98,6 +99,10 @@ export class Register extends Component {
       semester,
       errors
     };
+
+    if (this.props.user) {
+      return <Redirect to={{ pathname: '/' }} />;
+    }
 
     switch (step) {
       case 1:

@@ -7,11 +7,10 @@
 }
 
 body {
-  background-color: #f65d4f;
+  background-color: #ffca08;
   /* background-image: url(../public/background.png); */
   margin: 0;
   counter-reset: step;
-  /* font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif; */
 }
 
 .search-params {
@@ -259,14 +258,15 @@ header {
   color: #333;
 }
 
-/* header {
+/* Recommend Page code */
+.recommend {
   display: flex;
-  align-content: center;
   justify-content: center;
-  width: 1100px;
-  margin: 0 auto;
-  padding: 20px 0px 0px 0px;
-} */
+  align-items: center;
+}
+.recommend > .search {
+  width: 1200px !important;
+}
 
 .book-img {
   max-width: 400px;

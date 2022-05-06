@@ -108,7 +108,7 @@ class Login extends Component {
 
   render() {
     if (this.props.user) {
-      return <Redirect to={{ pathname: '/home' }} />;
+      return <Redirect to={{ pathname: '/' }} />;
     }
     return (
       <Container className="reviews" component="main" maxWidth="xs">
