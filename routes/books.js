@@ -9,14 +9,13 @@ const mongoose = require('mongoose');
 const Procyon = require('procyon'); //thanks to https://github.com/jochemstoel/Procyon
 
 const procyon = new Procyon({
-      nearestNeighbors: 5,
-      className: 'books',
-      numOfRecsStore: 30,
-      redisUrl: process.env.REDIS_URL || '127.0.0.1',
-      redisPort: process.env.REDIS_PORT || 6379,
-      redisAuth: process.env.REDIS_AUTH || ''
-  })
-
+  nearestNeighbors: 5,
+  className: 'books',
+  numOfRecsStore: 30,
+  redisUrl: process.env.REDIS_URL || '127.0.0.1',
+  redisPort: process.env.REDIS_PORT || 6379,
+  redisAuth: process.env.REDIS_AUTH || ''
+});
 
 // mime type to check uploaded image extension
 const FILE_TYPE_MAP = {
@@ -285,16 +284,14 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 
     //if alreadyReviewed removes the last review and updates reviews and rating and review
     if (alreadyReviewed) {
+      await book.reviews.pull({ _id: alreadyReviewed._id.toString() });
 
-      await book.reviews.pull({_id: alreadyReviewed._id.toString()});
-
-      if(alreadyReviewed.rating < 3){
-        await procyon.undisliked(req.user.username, req.params.id );
-      }
-      else{
+      if (alreadyReviewed.rating < 3) {
+        await procyon.undisliked(req.user.username, req.params.id);
+      } else {
         await procyon.unliked(req.user.username, req.params.id);
       }
-      
+
       //removing this user's rating from numRatings count
       switch (alreadyReviewed.rating) {
         case 1:
@@ -332,11 +329,10 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
       book: book._id
     };
 
-    // adding likes/dislikes in raccoon 
-    if(req.body.rating < 3){
+    // adding likes/dislikes in raccoon
+    if (req.body.rating < 3) {
       await procyon.disliked(req.user.username, req.params.id);
-    }
-    else{
+    } else {
       await procyon.liked(req.user.username, req.params.id);
     }
 
@@ -389,7 +385,6 @@ router.post(`/:id/reviews`, checkAuth, async (req, res) => {
 //getting recommendation for a user
 //Recs means recommendations
 router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
-
   procyon.recommendFor(req.user.username, 15).then(async (results) => {
     // returns an ranked sorted array of itemIds which represent the top recommendations
     // for that individual user based on knn.
@@ -401,31 +396,29 @@ router.get(`/:id/getRecs`, checkAuth, async (req, res) => {
 
     //const ids = ['623c965f48bc063cbd14d6c1', '623c955048bc063cbd14d6bb','623c9139a47e389a934ee4fc', '623864f594ed04b1179d7787', '623868ac94ed04b1179d778a'];
 
-    //converting id of type strings into type mongoose ObjectId 
-    let idsObject = ids.map(id => mongoose.Types.ObjectId(id));
+    //converting id of type strings into type mongoose ObjectId
+    let idsObject = ids.map((id) => mongoose.Types.ObjectId(id));
     //idsObject is array of ID of type ObjectId
     // query taken from https://stackoverflow.com/a/42293303/16567865
     var query = [
-      {$match: { _id: {$in: idsObject}}},
-      {$addFields: {"__order": {$indexOfArray: [idsObject, "$_id" ]}}},
-      {$sort: {"__order": 1}}
-     ];
+      { $match: { _id: { $in: idsObject } } },
+      { $addFields: { __order: { $indexOfArray: [idsObject, '$_id'] } } },
+      { $sort: { __order: 1 } }
+    ];
 
-     const books = await Book.aggregate(query)
-     //console.log(await Book.aggregate(query))
+    const books = await Book.aggregate(query);
+    //console.log(await Book.aggregate(query))
 
     //console.log(books)
     return res.send(books);
-
   });
 });
 
 // takes user id as a input and return array of users similar to that user
 router.get(`/:id/similar`, checkAuth, async (req, res) => {
-  procyon.mostSimilarUsers(req.user.username).then((result)=>{
+  procyon.mostSimilarUsers(req.user.username).then((result) => {
     return res.send(result);
   });
 });
-
 
 module.exports = router;
