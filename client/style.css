@@ -301,6 +301,23 @@ header {
   opacity: 0.6;
 }
 
+.manual-search {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.page-btn {
+  display: inline-flex;
+  gap: 3rem;
+  padding-bottom: 2rem;
+}
+
+.search-params {
+  display: flex;
+  flex-direction: row;
+}
+
 .search-params label {
   display: block;
   width: 60px;

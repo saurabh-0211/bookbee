@@ -5,7 +5,7 @@ import useSubjectList from './useSubjectList';
 
 const SEMESTER = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
-const SearchParams = () => {
+const SearchParams = ({ user }) => {
   const [search, setSearch] = useState('');
   const [semester, setSemester] = useState('');
   const [subject, setSubject] = useState('');
@@ -24,6 +24,15 @@ const SearchParams = () => {
       });
   };
 
+  const searchBooks = () => {
+    axios
+      .get(`http://localhost:3000/bookbee/books/search/?searchText=${search}&page=${page}`)
+      .then((res) => {
+        const myBooks = res.data;
+        setBooks(myBooks);
+      });
+  };
+
   useEffect(() => requestBooks(), [page]);
 
   const pageIncr = () => {
@@ -38,43 +47,59 @@ const SearchParams = () => {
 
   return (
     <div className="search-params">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          requestBooks();
-        }}
-      >
-        <label htmlFor="search">Search</label>
-        <input
-          id="search"
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-          placeholder="Titles, Book.."
-        />
-        <label htmlFor="semester">Semester</label>
-        <select id="semester" value={semester} onChange={(e) => setSemester(e.target.value)}>
-          <option />
-          {SEMESTER.map((semester) => (
-            <option value={semester} key={semester}>
-              {semester}
-            </option>
-          ))}
-        </select>
+      <div className="manual-search">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            requestBooks();
+          }}
+        >
+          <label htmlFor="semester">Semester</label>
+          <select id="semester" value={semester} onChange={(e) => setSemester(e.target.value)}>
+            <option />
+            {SEMESTER.map((semester) => (
+              <option value={semester} key={semester}>
+                {semester}
+              </option>
+            ))}
+          </select>
 
-        <label htmlFor="subject">Subject</label>
-        <select id="subject" value={subject} onChange={(e) => setSubject(e.target.value)}>
-          <option />
-          {subjects.map((subject) => (
-            <option value={subject} key={subject}>
-              {subject}
-            </option>
-          ))}
-        </select>
-        <button onClick={pageReset}>Submit</button>
-      </form>
-      <Results books={books} />
-      <button onClick={pageDecr}>prev</button>
-      <button onClick={pageIncr}>next</button>
+          <label htmlFor="subject">Subject</label>
+          <select id="subject" value={subject} onChange={(e) => setSubject(e.target.value)}>
+            <option />
+            {subjects.map((subject) => (
+              <option value={subject} key={subject}>
+                {subject}
+              </option>
+            ))}
+          </select>
+
+          <button onClick={pageReset}>Submit</button>
+        </form>
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            searchBooks();
+          }}
+        >
+          <label htmlFor="search">Search</label>
+          <input
+            id="search"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            placeholder="Titles, Book..."
+          />
+          <button onClick={pageReset}>Search</button>
+        </form>
+      </div>
+      <div>
+        <Results books={books} />
+        <div className="page-btn">
+          <button onClick={pageDecr}>prev</button>
+          <button onClick={pageIncr}>next</button>
+        </div>
+      </div>
     </div>
   );
 };

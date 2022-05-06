@@ -95,7 +95,7 @@ class App extends Component {
             <Route exact path="/recommend" component={() => <Recommend user={this.state.user} />} />
             {/* <Route path="/home" render={(props) => <Home {...props} />} /> */}
             <Route path="/">
-              <SearchParams user={this.state} />
+              <SearchParams user={this.state.user} />
             </Route>
           </Switch>
         </Router>
