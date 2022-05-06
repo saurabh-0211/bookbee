@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Comment = ({ reviews }) => {
   const classes = useStyles();
+  console.log(reviews.length);
   return (
     <Card sx={{ width: '50%' }}>
       {reviews.map((review) => (

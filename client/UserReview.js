@@ -42,7 +42,7 @@ const UserReview = ({ user, id, userReview }) => {
   };
 
   return (
-    <div className="reviews">
+    <div style={{ filter: userReview ? 'grayscale(60%)' : 0 }} className="reviews">
       <Rating
         name="simple-controlled"
         size="large"
