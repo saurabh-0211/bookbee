@@ -13,7 +13,7 @@ import axios from 'axios';
 
 class UserDetails extends Component {
   state = {
-    showPassword: true,
+    showPassword: false,
     errors: {}
   };
 

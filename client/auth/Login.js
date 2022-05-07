@@ -20,7 +20,7 @@ class Login extends Component {
     email: '',
     password: '',
     msg: null,
-    showPassword: true,
+    showPassword: false,
     errors: {}
   };
 
