@@ -4,6 +4,8 @@ import Rating from '@mui/material/Rating';
 import LinearProgress from '@mui/material/LinearProgress';
 import UserReview from './UserReview';
 import Comment from './Comment';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 class Details extends Component {
   state = { loading: true, value: 0 };
 
@@ -22,7 +24,11 @@ class Details extends Component {
 
   render() {
     if (this.state.loading) {
-      return <h2>loading....</h2>;
+      return (
+        <Grid>
+          <CircularProgress color="warning" />
+        </Grid>
+      );
     }
     const {
       _id,
